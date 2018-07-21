@@ -6,20 +6,25 @@ import * as links from 'utils/links'
 
 import Arrow from 'svg/arrow.svg'
 
-const buttonStyle = css`
+const plankStyle = css`
+  position: fixed;
   padding: 0 10px;
+  background-color: #fff;
+  text-transform: uppercase;
+  border: 5px solid #f9f4f8;
+`
+
+const buttonStyle = css`
   display: flex;
   flex-direction: row;
   align-items: center;
   position: fixed;
   height: 75px;
-  background-color: #fff;
   border-radius: 2px;
   cursor: pointer;
   border: none;
-  text-transform: uppercase;
   font-size: 16px;
-  border: 5px solid #f9f4f8;
+  ${plankStyle};
 
   & svg {
     display: block;
@@ -61,12 +66,23 @@ const Next = styled(Link)`
 
 const Source = styled.a`
   ${buttonStyle};
+  right: 40px;
+  bottom: 40px;
+`
+
+const Hint = styled.div`
+  ${plankStyle};
+  padding: 20px;
   left: 40px;
   bottom: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  color: ${colors.brand};
 `
 
 interface DemoPageProps {
   children: JSX.Element
+  hint?: string | JSX.Element
   nextLink?: string
   nextText?: string
   srcLink?: string
@@ -74,6 +90,7 @@ interface DemoPageProps {
 
 export const DemoPage = ({
   children,
+  hint,
   nextLink,
   nextText,
   srcLink,
@@ -94,6 +111,7 @@ export const DemoPage = ({
         <div>Source</div>
       </Source>
     )}
+    {hint && <Hint>{hint}</Hint>}
     {children}
   </>
 )

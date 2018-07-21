@@ -31,11 +31,18 @@ export class Vector {
   }
 
   setMag(mag: number) {
-    const norm = this.norm()
-    return new Vector(norm.x * mag, norm.y * mag)
+    return this.norm().mult(mag)
   }
 
   mult(val: number) {
     return new Vector(this.x * val, this.y * val)
+  }
+
+  limit(val: number) {
+    if (this.mag() <= val) {
+      return this
+    } else {
+      return this.setMag(val)
+    }
   }
 }

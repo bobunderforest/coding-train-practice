@@ -35,12 +35,15 @@ export class Vector {
 
   setMag(mag: number) {
     this.norm()
-    this.x *= mag
-    this.y *= mag
+    this.mult(mag)
   }
 
   mult(val: number) {
     this.x *= val
     this.y *= val
+  }
+
+  limit(val: number) {
+    if (this.mag() > val) this.setMag(val)
   }
 }

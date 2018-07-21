@@ -43,7 +43,12 @@ export class Vectors extends React.PureComponent<{}> {
   drawState: DrawState = {}
   render() {
     return (
-      <DemoPage nextText="Forces" nextLink={links.forces}>
+      <DemoPage
+        hint="Move mouse around"
+        nextLink={links.forces}
+        nextText="Forces"
+        srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Vectors/Vectors.tsx"
+      >
         <FullScreenCanvas
           onMouseMove={e => {
             this.drawState.mouse = new Vector(e.pageX, e.pageY)

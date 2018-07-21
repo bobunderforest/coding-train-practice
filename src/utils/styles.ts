@@ -13,8 +13,8 @@ export const dur = {
 export const colors = {
   bg: '#f7f7f7',
   border: '#f0f0f0',
-  brand: '#ec1651',
-  brandHover: '#fd4e8a',
+  brand: '#d716ec',
+  brandHover: '#9400a5',
   danger: '#ec1651',
   focus: '#c5c5c5',
   placeholder: '#bbbdbf',

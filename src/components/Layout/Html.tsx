@@ -26,7 +26,7 @@ export function Html({ helmet, markup, scripts = [], styleEl }: HtmlProps) {
         {helmet.link.toComponent()}
         {helmet.script.toComponent()}
         {styleEl}
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=cyrillic-ext" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700" rel="stylesheet" />
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: markup }} />

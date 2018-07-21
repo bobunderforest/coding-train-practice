@@ -5,14 +5,13 @@ import {
   ScrollRestorer,
   ScrollStateProvider,
 } from '@gnarlycode/react-scroll-state'
-import { colors } from 'utils/styles'
 import 'utils/defaultStyles'
 
 const App = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: ${colors.bg};
+  background: linear-gradient(#fcfde5, #f5ffef, #faf1fb, #ffe1f7);
 `
 
 // Typings

@@ -3,7 +3,7 @@ import {
   defaultBodyLockClass,
   defaultHtmlLockClass,
 } from '@gnarlycode/react-scroll-state'
-import { colors } from 'utils/styles'
+import { colors, dur } from './styles'
 
 injectGlobal`
   * {
@@ -20,8 +20,8 @@ injectGlobal`
   }
 
   body {
-    font-size: 14px;
-    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
     line-height: 1.5;
     color: ${colors.text};
     -webkit-text-size-adjust: 100%;
@@ -86,6 +86,15 @@ injectGlobal`
   a {
     color: ${colors.brand};
     text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid ${colors.brand};
+    transition: color ease ${dur.norm}, border-color ease ${dur.norm};
+
+    &:hover {
+      color: ${colors.brandHover};
+      border-color: ${colors.brandHover};
+      transition-duration: ${dur.fast};
+    }
   }
 
   html.${defaultHtmlLockClass} {

@@ -9,6 +9,9 @@ export const normalize = (start: number, end: number, value: number) =>
 export const narrow = (start: number, end: number, value: number) =>
   minmax(0, normalize(start, end, value), 1)
 
+export const random = (min: number, max: number) =>
+  Math.random() * (max - min) + min
+
 export const throttle = (fn: () => void, threshold: number = 100) => {
   let last: number
   let timer: number

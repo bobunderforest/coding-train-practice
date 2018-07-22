@@ -20,3 +20,6 @@ BABEL_RUNTIME=true
 
 # Add express app
 # EXPRESS_APP=./api/index.js
+
+# For gh-pages
+BASE_URL=/coding-train-practice

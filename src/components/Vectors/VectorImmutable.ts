@@ -9,15 +9,6 @@ export class Vector {
     this.y = y
   }
 
-  copy() {
-    return new Vector(this.x, this.y)
-  }
-
-  norm() {
-    const mag = this.mag()
-    return new Vector(this.x / mag, this.y / mag)
-  }
-
   add(b: Vector) {
     return new Vector(this.x + b.x, this.y + b.y)
   }
@@ -26,16 +17,28 @@ export class Vector {
     return new Vector(this.x - b.x, this.y - b.y)
   }
 
+  mult(val: number) {
+    return new Vector(this.x * val, this.y * val)
+  }
+
+  div(val: number) {
+    return new Vector(this.x / val, this.y / val)
+  }
+
+  copy() {
+    return new Vector(this.x, this.y)
+  }
+
   mag() {
     return Math.sqrt(sqr(this.x) + sqr(this.y))
   }
 
-  setMag(mag: number) {
-    return this.norm().mult(mag)
+  norm() {
+    return this.div(this.mag())
   }
 
-  mult(val: number) {
-    return new Vector(this.x * val, this.y * val)
+  setMag(mag: number) {
+    return this.norm().mult(mag)
   }
 
   limit(val: number) {

@@ -9,16 +9,6 @@ export class Vector {
     this.y = y
   }
 
-  copy() {
-    return new Vector(this.x, this.y)
-  }
-
-  norm() {
-    const mag = this.mag()
-    this.x /= mag
-    this.y /= mag
-  }
-
   add(b: Vector) {
     this.x += b.x
     this.y += b.y
@@ -29,18 +19,31 @@ export class Vector {
     this.y -= b.y
   }
 
+  mult(val: number) {
+    this.x *= val
+    this.y *= val
+  }
+
+  div(val: number) {
+    this.x /= val
+    this.y /= val
+  }
+
+  copy() {
+    return new Vector(this.x, this.y)
+  }
+
   mag() {
     return Math.sqrt(sqr(this.x) + sqr(this.y))
+  }
+
+  norm() {
+    this.div(this.mag())
   }
 
   setMag(mag: number) {
     this.norm()
     this.mult(mag)
-  }
-
-  mult(val: number) {
-    this.x *= val
-    this.y *= val
   }
 
   limit(val: number) {

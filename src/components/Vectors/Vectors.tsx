@@ -5,9 +5,15 @@ import { Vector } from './VectorImmutable'
 import { colors } from 'utils/styles'
 import * as links from 'utils/links'
 
+/**
+ * Represents physical object
+ */
 export class Mover {
+  // Acceleration
   acc: Vector
+  // Position
   pos: Vector
+  // Velocity
   vel: Vector
 
   constructor(pos: Vector) {
@@ -17,6 +23,7 @@ export class Mover {
   }
 
   update() {
+    // Apply acc to velocity and velocity to position
     this.vel = this.vel.add(this.acc)
     this.pos = this.pos.add(this.vel)
   }

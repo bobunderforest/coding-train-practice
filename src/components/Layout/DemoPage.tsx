@@ -18,6 +18,7 @@ const plankStyle = css`
   background-color: #fff;
   text-transform: uppercase;
   border: 5px solid #f9f4f8;
+  user-select: none;
 `
 
 const buttonStyle = css`
@@ -93,47 +94,88 @@ const RestartBtn = styled.div`
   margin-left: -42px;
 `
 
-interface DemoPageProps {
-  canvasProps?: Partial<CanvasAnimFrameProps>
+export interface SetupArgs {
+  height: number
+  width: number
+}
+
+interface CanvasPropsArgs<S> {
+  drawState: S
+}
+
+interface DemoPageProps<S> {
+  canvasProps?: (args: CanvasPropsArgs<S>) => Partial<CanvasAnimFrameProps>
   hint?: string | JSX.Element
   nextLink?: string
   nextText?: string
   onRestart?: () => void
-  render: (args: RenderArgs) => void
+  render: (args: RenderArgs & { drawState: S }) => void
+  setup?: (args: SetupArgs) => S
   srcLink?: string
 }
 
-export const DemoPage = ({
-  canvasProps,
-  hint,
-  nextLink,
-  nextText,
-  onRestart,
-  render,
-  srcLink,
-}: DemoPageProps) => (
-  <>
-    <Back to={links.home}>
-      <Arrow />
-      <div>Home</div>
-    </Back>
-    {nextLink && (
-      <Next to={nextLink}>
-        <div>{nextText}</div>
-        <Arrow />
-      </Next>
-    )}
-    {srcLink && (
-      <Source href={srcLink} target="_blank">
-        <div>Source</div>
-      </Source>
-    )}
-    {onRestart && (
-      <RestartBtn onClick={onRestart}>
-        <Restart />
-      </RestartBtn>
-    )}
-    {hint && <Hint>{hint}</Hint>}
-    <FullScreenCanvas {...canvasProps} render={render} />
-  </>
-)
+interface DemoPageState<S> {
+  drawState?: S
+}
+
+export class DemoPage<S extends {} = {}> extends React.PureComponent<
+  DemoPageProps<S>,
+  DemoPageState<S>
+> {
+  shouldSetup: boolean = true
+
+  constructor(props: DemoPageProps<S>) {
+    super(props)
+    this.state = {}
+  }
+
+  render() {
+    const {
+      canvasProps,
+      hint,
+      nextLink,
+      nextText,
+      render,
+      setup,
+      srcLink,
+    } = this.props
+    const { drawState } = this.state
+    const cp = canvasProps && drawState ? canvasProps({ drawState }) : {}
+    return (
+      <>
+        <Back to={links.home}>
+          <Arrow />
+          <div>Home</div>
+        </Back>
+        <RestartBtn onClick={() => (this.shouldSetup = true)}>
+          <Restart />
+        </RestartBtn>
+        {nextLink && (
+          <Next to={nextLink}>
+            <div>{nextText}</div>
+            <Arrow />
+          </Next>
+        )}
+        {srcLink && (
+          <Source href={srcLink} target="_blank">
+            <div>Source</div>
+          </Source>
+        )}
+        {hint && <Hint>{hint}</Hint>}
+        <FullScreenCanvas
+          {...cp}
+          render={args => {
+            const { width, height } = args
+            if (this.shouldSetup) {
+              this.setState({
+                drawState: setup ? setup({ width, height }) : ({} as any),
+              })
+              this.shouldSetup = false
+            }
+            if (drawState) render({ ...args, drawState })
+          }}
+        />
+      </>
+    )
+  }
+}

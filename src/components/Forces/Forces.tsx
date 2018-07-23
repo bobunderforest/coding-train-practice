@@ -8,43 +8,39 @@ import * as links from 'utils/links'
 const windForce = new Vector(0.5, 0)
 
 interface DrawState {
-  guys?: Mover[]
+  guys: Mover[]
   isWind?: boolean
 }
 
-export class Forces extends React.PureComponent<{}> {
-  drawState: DrawState = {}
-  render() {
-    return (
-      <DemoPage
-        hint="click for wind"
-        nextLink={links.dragResistance}
-        nextText="Drag Resistance"
-        srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Forces/Forces.tsx"
-        canvasProps={{
-          onMouseDown: () => (this.drawState.isWind = true),
-          onMouseUp: () => (this.drawState.isWind = false),
-        }}
-        render={({ ctx, width, height }) => {
-          if (!this.drawState.guys) {
-            this.drawState.guys = Array.from(Array(6)).map(
-              () => new Mover(new Vector(random(90, width - 90), height / 2)),
-            )
-          }
+const Page = DemoPage as new () => DemoPage<DrawState>
 
-          this.drawState.guys.forEach(guy => {
-            // Wind
-            if (this.drawState.isWind) guy.applyForce(windForce)
+export const Forces = () => (
+  <Page
+    hint="click for wind"
+    nextLink={links.dragResistance}
+    nextText="Drag Resistance"
+    srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Forces/Forces.tsx"
+    canvasProps={({ drawState }) => ({
+      onMouseDown: () => (drawState.isWind = true),
+      onMouseUp: () => (drawState.isWind = false),
+    })}
+    setup={({ width, height }) => ({
+      guys: Array.from(Array(6)).map(
+        () => new Mover(new Vector(random(90, width - 90), height / 2)),
+      ),
+    })}
+    render={({ ctx, width, height, drawState }) => {
+      drawState.guys.forEach(guy => {
+        // Wind
+        if (drawState.isWind) guy.applyForce(windForce)
 
-            // Gravity
-            guy.gravity()
+        // Gravity
+        guy.gravity()
 
-            guy.edges(width, height)
-            guy.update(width, height)
-            guy.render(ctx)
-          })
-        }}
-      />
-    )
-  }
-}
+        guy.edges(width, height)
+        guy.update(width, height)
+        guy.render(ctx)
+      })
+    }}
+  />
+)

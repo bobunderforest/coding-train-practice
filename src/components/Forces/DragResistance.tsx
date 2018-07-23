@@ -6,11 +6,8 @@ import { Mover } from './Mover'
 import { random, sqr } from 'utils'
 import { colors } from 'utils/styles'
 
-const windForce = new Vector(0.5, 0)
-
 interface DrawState {
   guys?: Mover[]
-  isWind?: boolean
   shouldSetup?: boolean
 }
 
@@ -31,12 +28,6 @@ export class DragResistance extends React.PureComponent<{}> {
         srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Forces/DragResistance.tsx"
       >
         <FullScreenCanvas
-          onMouseDown={() => {
-            this.drawState.isWind = true
-          }}
-          onMouseUp={() => {
-            this.drawState.isWind = false
-          }}
           render={({ ctx, width, height }) => {
             if (this.drawState.shouldSetup) this.setup(width, height)
 
@@ -56,9 +47,6 @@ export class DragResistance extends React.PureComponent<{}> {
 
             if (!this.drawState.guys) return
             this.drawState.guys.forEach(guy => {
-              // Wind
-              if (this.drawState.isWind) guy.applyForce(windForce)
-
               // Gravity
               guy.gravity()
 

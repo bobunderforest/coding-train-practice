@@ -42,5 +42,6 @@ export const Home = () => (
     </p>
     <DemoLink to={links.vectors}>Vectors</DemoLink>
     <DemoLink to={links.forces}>Forces</DemoLink>
+    <DemoLink to={links.dragResistance}>Drag Resistance</DemoLink>
   </Wrap>
 )

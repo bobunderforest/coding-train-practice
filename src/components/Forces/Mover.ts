@@ -3,7 +3,7 @@ import { colors } from 'utils/styles'
 import { random } from 'utils'
 
 // Force is a `vector` that cause object with mass to `accelerate`
-const gravityConst = new Vector(0, 1)
+const gravityConst = new Vector(0, 0.98)
 
 export class Mover {
   acc: Vector

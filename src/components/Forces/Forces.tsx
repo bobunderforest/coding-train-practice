@@ -4,6 +4,7 @@ import { FullScreenCanvas } from 'components/Utils/FullScreenCanvas'
 import { Vector } from 'components/Vectors/VectorMutable'
 import { Mover } from './Mover'
 import { random } from 'utils'
+import * as links from 'utils/links'
 
 const windForce = new Vector(0.5, 0)
 
@@ -18,6 +19,8 @@ export class Forces extends React.PureComponent<{}> {
     return (
       <DemoPage
         hint="click for wind"
+        nextLink={links.dragResistance}
+        nextText="Drag Resistance"
         srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Forces/Forces.tsx"
       >
         <FullScreenCanvas

@@ -34,7 +34,8 @@ export class Vector {
   }
 
   norm() {
-    return this.div(this.mag())
+    const mag = this.mag()
+    return mag === 0 ? this.copy() : this.div(mag)
   }
 
   setMag(mag: number) {

@@ -38,7 +38,7 @@ export class Vector {
   }
 
   norm() {
-    this.div(this.mag())
+    if (this.mag() !== 0) this.div(this.mag())
   }
 
   setMag(mag: number) {

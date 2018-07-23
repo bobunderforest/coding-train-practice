@@ -26,7 +26,10 @@ export class DragResistance extends React.PureComponent<{}> {
 
   render() {
     return (
-      <DemoPage srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Forces/DragResistance.tsx">
+      <DemoPage
+        onRestart={() => (this.drawState.shouldSetup = true)}
+        srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Forces/DragResistance.tsx"
+      >
         <FullScreenCanvas
           onMouseDown={() => {
             this.drawState.isWind = true

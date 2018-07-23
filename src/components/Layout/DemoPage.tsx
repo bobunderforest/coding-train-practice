@@ -5,6 +5,7 @@ import { colors, dur } from 'utils/styles'
 import * as links from 'utils/links'
 
 import Arrow from 'svg/arrow.svg'
+import Restart from 'svg/restart.svg'
 
 const plankStyle = css`
   position: fixed;
@@ -80,11 +81,19 @@ const Hint = styled.div`
   color: ${colors.brand};
 `
 
+const RestartBtn = styled.div`
+  ${buttonStyle};
+  top: 40px;
+  left: 50%;
+  margin-left: -42px;
+`
+
 interface DemoPageProps {
   children: JSX.Element
   hint?: string | JSX.Element
   nextLink?: string
   nextText?: string
+  onRestart?: () => void
   srcLink?: string
 }
 
@@ -93,6 +102,7 @@ export const DemoPage = ({
   hint,
   nextLink,
   nextText,
+  onRestart,
   srcLink,
 }: DemoPageProps) => (
   <>
@@ -110,6 +120,11 @@ export const DemoPage = ({
       <Source href={srcLink} target="_blank">
         <div>Source</div>
       </Source>
+    )}
+    {onRestart && (
+      <RestartBtn onClick={onRestart}>
+        <Restart />
+      </RestartBtn>
     )}
     {hint && <Hint>{hint}</Hint>}
     {children}

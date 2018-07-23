@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { DemoPage } from 'components/Layout/DemoPage'
-import { FullScreenCanvas } from 'components/Utils/FullScreenCanvas'
 import { Vector } from './VectorImmutable'
 import { colors } from 'utils/styles'
 import * as links from 'utils/links'
@@ -55,51 +54,47 @@ export class Vectors extends React.PureComponent<{}> {
         nextLink={links.forces}
         nextText="Forces"
         srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Vectors/Vectors.tsx"
-      >
-        <FullScreenCanvas
-          onMouseMove={e => {
-            this.drawState.mouse = new Vector(e.pageX, e.pageY)
-          }}
-          onMouseOut={e => {
-            this.drawState.mouse = undefined
-          }}
-          render={({ ctx, width, height }) => {
-            if (!this.drawState.bitch) {
-              this.drawState.bitch = new Mover(new Vector(100, 100))
-            }
+        canvasProps={{
+          onMouseMove: e =>
+            (this.drawState.mouse = new Vector(e.pageX, e.pageY)),
+          onMouseOut: e => (this.drawState.mouse = undefined),
+        }}
+        render={({ ctx, width, height }) => {
+          if (!this.drawState.bitch) {
+            this.drawState.bitch = new Mover(new Vector(100, 100))
+          }
 
-            const { bitch } = this.drawState
-            const { mouse } = this.drawState
+          const { bitch } = this.drawState
+          const { mouse } = this.drawState
 
-            if (mouse) {
-              // Calc path between mouse and current position
-              const path = mouse.sub(bitch.pos)
+          if (mouse) {
+            // Calc path between mouse and current position
+            const path = mouse.sub(bitch.pos)
 
-              // Calc acceleration
-              bitch.acc = path.setMag(0.5)
+            // Calc acceleration
+            bitch.acc = path.setMag(0.5)
 
-              // Draw line between mouse and bitch
-              ctx.beginPath()
-              ctx.moveTo(bitch.pos.x, bitch.pos.y)
-              ctx.lineTo(mouse.x, mouse.y)
-              ctx.strokeStyle = '#ccc'
-              ctx.stroke()
-            }
+            // Draw line between mouse and bitch
+            ctx.beginPath()
+            ctx.moveTo(bitch.pos.x, bitch.pos.y)
+            ctx.lineTo(mouse.x, mouse.y)
+            ctx.strokeStyle = '#ccc'
+            ctx.stroke()
+          }
 
-            bitch.update()
-            bitch.bounce(width, height)
-            bitch.render(ctx)
+          bitch.update()
+          bitch.bounce(width, height)
+          bitch.render(ctx)
 
-            // Draw mouse
-            if (mouse) {
-              ctx.beginPath()
-              ctx.arc(mouse.x, mouse.y, 20, 0, 360)
-              ctx.fillStyle = colors.brandHover
-              ctx.fill()
-            }
-          }}
-        />
-      </DemoPage>
+          // Draw mouse
+          if (mouse) {
+            ctx.beginPath()
+            ctx.arc(mouse.x, mouse.y, 20, 0, 360)
+            ctx.fillStyle = colors.brandHover
+            ctx.fill()
+          }
+        }}
+      />
     )
   }
 }

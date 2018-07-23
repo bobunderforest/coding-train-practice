@@ -2,6 +2,11 @@ import * as React from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { colors, dur } from 'utils/styles'
+import {
+  CanvasAnimFrameProps,
+  RenderArgs,
+} from 'components/Utils/CanvasAnimFrame'
+import { FullScreenCanvas } from 'components/Utils/FullScreenCanvas'
 import * as links from 'utils/links'
 
 import Arrow from 'svg/arrow.svg'
@@ -89,20 +94,22 @@ const RestartBtn = styled.div`
 `
 
 interface DemoPageProps {
-  children: JSX.Element
+  canvasProps?: Partial<CanvasAnimFrameProps>
   hint?: string | JSX.Element
   nextLink?: string
   nextText?: string
   onRestart?: () => void
+  render: (args: RenderArgs) => void
   srcLink?: string
 }
 
 export const DemoPage = ({
-  children,
+  canvasProps,
   hint,
   nextLink,
   nextText,
   onRestart,
+  render,
   srcLink,
 }: DemoPageProps) => (
   <>
@@ -127,6 +134,6 @@ export const DemoPage = ({
       </RestartBtn>
     )}
     {hint && <Hint>{hint}</Hint>}
-    {children}
+    <FullScreenCanvas {...canvasProps} render={render} />
   </>
 )

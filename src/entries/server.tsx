@@ -9,7 +9,7 @@ import { Html } from 'components/Layout/Html'
 import createServerEntry from '@gnarlycode/react-app-tools/helpers/server-entry'
 
 // Server Middleware
-export default createServerEntry(async ({ scripts, res, req, next }) => {
+export default createServerEntry(({ scripts, res, req, next }) => {
   try {
     const sheet = new ServerStyleSheet()
 

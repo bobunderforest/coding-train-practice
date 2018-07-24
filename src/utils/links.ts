@@ -1,6 +1,21 @@
 const withBase = (s: string) => process.env.BASE_URL + s
 
-export const home = withBase('/')
-export const vectors = withBase('/vectors/')
-export const forces = withBase('/forces/')
-export const dragResistance = withBase('/drag-resistance/')
+// tslint:disable:object-literal-sort-keys
+export const links = {
+  home: {
+    link: withBase('/'),
+    text: 'Home',
+  },
+  vectors: {
+    link: withBase('/vectors/'),
+    text: 'Vectors',
+  },
+  forces: {
+    link: withBase('/forces/'),
+    text: 'Forces',
+  },
+  dragResistance: {
+    link: withBase('/drag-resistance/'),
+    text: 'Drag Resistance',
+  },
+}

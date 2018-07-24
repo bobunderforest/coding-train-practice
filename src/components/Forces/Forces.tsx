@@ -3,7 +3,7 @@ import { DemoPage } from 'components/Layout/DemoPage'
 import { Vector } from 'components/Vectors/VectorMutable'
 import { Mover } from './Mover'
 import { random } from 'utils'
-import * as links from 'utils/links'
+import { links } from 'utils/links'
 
 const windForce = new Vector(0.5, 0)
 
@@ -17,9 +17,8 @@ const Page = DemoPage as new () => DemoPage<DrawState>
 export const Forces = () => (
   <Page
     hint="click for wind"
-    nextLink={links.dragResistance}
-    nextText="Drag Resistance"
-    srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Forces/Forces.tsx"
+    next={links.dragResistance}
+    srcLink="Forces/Forces.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () => (drawState.isWind = true),
       onMouseUp: () => (drawState.isWind = false),

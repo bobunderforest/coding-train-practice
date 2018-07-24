@@ -13,7 +13,7 @@ const Page = DemoPage as new () => DemoPage<DrawState>
 
 export const DragResistance = () => (
   <Page
-    srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Forces/DragResistance.tsx"
+    srcLink="Forces/DragResistance.tsx"
     setup={({ width }) => ({
       guys: Array.from(Array(6)).map(
         () => new Mover(new Vector(random(90, width - 90), 100)),

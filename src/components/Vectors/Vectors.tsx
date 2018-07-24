@@ -2,7 +2,7 @@ import * as React from 'react'
 import { DemoPage } from 'components/Layout/DemoPage'
 import { Vector } from './VectorImmutable'
 import { colors } from 'utils/styles'
-import * as links from 'utils/links'
+import { links } from 'utils/links'
 
 /**
  * Represents physical object
@@ -50,9 +50,8 @@ const Page = DemoPage as new () => DemoPage<DrawState>
 export const Vectors = () => (
   <Page
     hint="Move mouse around"
-    nextLink={links.forces}
-    nextText="Forces"
-    srcLink="https://github.com/manneredboor/coding-train-practice/blob/master/src/components/Vectors/Vectors.tsx"
+    next={links.forces}
+    srcLink="Vectors/Vectors.tsx"
     canvasProps={({ drawState }) => ({
       onMouseMove: e => (drawState.mouse = new Vector(e.pageX, e.pageY)),
       onMouseOut: e => (drawState.mouse = undefined),

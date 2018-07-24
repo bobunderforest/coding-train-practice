@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import * as links from 'utils/links'
+import { links } from 'utils/links'
 
 const Wrap = styled.div`
   margin: 80px auto;
@@ -28,6 +28,10 @@ const DemoLink = styled(Link)`
   font-size: 32px;
 `
 
+const LinkWithText = (p: { text: string; link: string }) => (
+  <DemoLink to={p.link}>{p.text}</DemoLink>
+)
+
 export const Home = () => (
   <Wrap>
     <h2>Hello!</h2>
@@ -40,8 +44,8 @@ export const Home = () => (
       <br />
       You can check out the demos:
     </p>
-    <DemoLink to={links.vectors}>Vectors</DemoLink>
-    <DemoLink to={links.forces}>Forces</DemoLink>
-    <DemoLink to={links.dragResistance}>Drag Resistance</DemoLink>
+    <LinkWithText {...links.vectors} />
+    <LinkWithText {...links.forces} />
+    <LinkWithText {...links.dragResistance} />
   </Wrap>
 )

@@ -4,7 +4,7 @@ import { Vectors } from 'components/Vectors/Vectors'
 import { Forces } from 'components/Forces/Forces'
 import { DragResistance } from 'components/Forces/DragResistance'
 import { AppContainer } from 'components/Layout/AppContainer'
-import * as links from 'utils/links'
+import { links } from 'utils/links'
 
 export const routes: RouteConfig[] = [
   {
@@ -13,27 +13,27 @@ export const routes: RouteConfig[] = [
       {
         component: Home,
         exact: true,
-        path: links.home,
+        path: links.home.link,
       },
       {
         component: Vectors,
         exact: true,
-        path: links.vectors,
+        path: links.vectors.link,
       },
       {
         component: Forces,
         exact: true,
-        path: links.forces,
+        path: links.forces.link,
       },
       {
         component: Forces,
         exact: true,
-        path: links.forces,
+        path: links.forces.link,
       },
       {
         component: DragResistance,
         exact: true,
-        path: links.dragResistance,
+        path: links.dragResistance.link,
       },
     ],
   },

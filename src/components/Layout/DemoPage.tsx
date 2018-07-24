@@ -7,7 +7,7 @@ import {
   RenderArgs,
 } from 'components/Utils/CanvasAnimFrame'
 import { FullScreenCanvas } from 'components/Utils/FullScreenCanvas'
-import * as links from 'utils/links'
+import { links } from 'utils/links'
 
 import Arrow from 'svg/arrow.svg'
 import Restart from 'svg/restart.svg'
@@ -106,8 +106,7 @@ interface CanvasPropsArgs<S> {
 interface DemoPageProps<S> {
   canvasProps?: (args: CanvasPropsArgs<S>) => Partial<CanvasAnimFrameProps>
   hint?: string | JSX.Element
-  nextLink?: string
-  nextText?: string
+  next?: { link: string; text: string }
   onRestart?: () => void
   render: (args: RenderArgs & { drawState: S }) => void
   setup?: (args: SetupArgs) => S
@@ -130,34 +129,32 @@ export class DemoPage<S extends {} = {}> extends React.PureComponent<
   }
 
   render() {
-    const {
-      canvasProps,
-      hint,
-      nextLink,
-      nextText,
-      render,
-      setup,
-      srcLink,
-    } = this.props
+    const { canvasProps, hint, next, render, setup, srcLink } = this.props
     const { drawState } = this.state
     const cp = canvasProps && drawState ? canvasProps({ drawState }) : {}
     return (
       <>
-        <Back to={links.home}>
+        <Back to={links.home.link}>
           <Arrow />
           <div>Home</div>
         </Back>
         <RestartBtn onClick={() => (this.shouldSetup = true)}>
           <Restart />
         </RestartBtn>
-        {nextLink && (
-          <Next to={nextLink}>
-            <div>{nextText}</div>
+        {next && (
+          <Next to={next.link}>
+            <div>{next.text}</div>
             <Arrow />
           </Next>
         )}
         {srcLink && (
-          <Source href={srcLink} target="_blank">
+          <Source
+            href={
+              'https://github.com/manneredboor/coding-train-practice/blob/master/src/components/' +
+              srcLink
+            }
+            target="_blank"
+          >
             <div>Source</div>
           </Source>
         )}

@@ -25,6 +25,26 @@ class Attractor {
   }
 }
 
+export const gravityAttraction = (obj1: Mover | Attractor, obj2: Mover) => {
+  // Gravity attraction between `Attractor` and current guy
+  const direction = obj1.pos.copy()
+  direction.sub(obj2.pos)
+
+  const distance = direction.mag()
+
+  const g = 9.8 * 1000
+  let forceMag = (g * obj2.mass * obj1.mass) / sqr(distance)
+
+  if (forceMag > 1) forceMag = 1
+  else if (forceMag < 0.01) forceMag = 0.01
+
+  const force = direction.copy()
+  force.norm()
+  force.mult(forceMag)
+
+  obj2.applyForce(force)
+}
+
 interface DrawState {
   attractor: Attractor
   guys: Mover[]
@@ -37,7 +57,7 @@ const Page = DemoPage as new () => DemoPage<DrawState>
 export const GravityAttraction = () => (
   <Page
     hint="click to move attractor"
-    next={links.dragResistance}
+    next={links.mutalAttraction}
     srcLink="Forces/GravityAttraction.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () => (drawState.isMoving = true),
@@ -46,11 +66,14 @@ export const GravityAttraction = () => (
     })}
     setup={({ width, height }) => {
       const guys = Array.from(Array(3)).map(() => {
-        const avRange = (height - 400) / 2 + 200
-        const range = random(0, avRange)
-        const initForce = new Vector((avRange - range) / 10, 0)
+        const border = height * 0.1
+        const avRange = (height - border * 2) / 2
+        const range = random(border, avRange)
+
         const guy = new Mover(width / 2, range)
-        guy.applyForce(initForce)
+        const initForce = (avRange - range) / ((1 / guy.mass) * 20)
+        guy.applyForce(new Vector(initForce, 0))
+
         return guy
       })
       return {
@@ -64,24 +87,7 @@ export const GravityAttraction = () => (
       if (isMoving && mouse) attractor.pos = mouse
 
       guys.forEach(guy => {
-        // Gravity attraction between `Attractor` and current guy
-        const direction = attractor.pos.copy()
-        direction.sub(guy.pos)
-
-        const distance = direction.mag()
-
-        const g = 9.8 * 1000
-        let forceMag = (g * guy.mass * attractor.mass) / sqr(distance)
-
-        if (forceMag > 1) forceMag = 1
-        else if (forceMag < 0.01) forceMag = 0.01
-
-        const force = direction.copy()
-        force.norm()
-        force.mult(forceMag)
-
-        guy.applyForce(force)
-
+        gravityAttraction(attractor, guy)
         guy.update(width, height)
         guy.render(ctx)
       })

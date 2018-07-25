@@ -44,9 +44,6 @@ export const Home = () => (
       <br />
       You can check out the demos:
     </p>
-    <LinkWithText {...links.vectors} />
-    <LinkWithText {...links.forces} />
-    <LinkWithText {...links.dragResistance} />
-    <LinkWithText {...links.gravityAttraction} />
+    {Object.keys(links).map(key => <LinkWithText {...(links as any)[key]} />)}
   </Wrap>
 )

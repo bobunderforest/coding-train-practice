@@ -22,4 +22,8 @@ export const links = {
     link: withBase('/gravity-attraction/'),
     text: 'Gravity Attraction',
   },
+  mutalAttraction: {
+    link: withBase('/mutal-attraction/'),
+    text: 'Mutal Attraction',
+  },
 }

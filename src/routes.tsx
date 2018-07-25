@@ -4,6 +4,7 @@ import { Vectors } from 'components/Vectors/Vectors'
 import { Forces } from 'components/Forces/Forces'
 import { DragResistance } from 'components/Forces/DragResistance'
 import { GravityAttraction } from 'components/Forces/GravityAttraction'
+import { MutalAttraction } from 'components/Forces/MutalAttraction'
 import { AppContainer } from 'components/Layout/AppContainer'
 import { links } from 'utils/links'
 
@@ -40,6 +41,11 @@ export const routes: RouteConfig[] = [
         component: GravityAttraction,
         exact: true,
         path: links.gravityAttraction.link,
+      },
+      {
+        component: MutalAttraction,
+        exact: true,
+        path: links.mutalAttraction.link,
       },
     ],
   },

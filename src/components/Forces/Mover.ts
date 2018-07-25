@@ -68,6 +68,14 @@ export class Mover {
     }
   }
 
+  edgesLoop(x: number, y: number) {
+    const pos = this.pos
+    if (pos.x > x) pos.x = 0
+    if (pos.x < 0) pos.x = x
+    if (pos.y > y) pos.y = 0
+    if (pos.y < 0) pos.y = y
+  }
+
   render(ctx: CanvasRenderingContext2D) {
     ctx.beginPath()
     ctx.arc(this.pos.x, this.pos.y, 10 * this.mass, 0, 360)

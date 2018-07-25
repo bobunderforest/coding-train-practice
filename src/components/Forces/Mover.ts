@@ -70,7 +70,7 @@ export class Mover {
 
   render(ctx: CanvasRenderingContext2D) {
     ctx.beginPath()
-    ctx.arc(this.pos.x, this.pos.y, 20 * this.mass, 0, 360)
+    ctx.arc(this.pos.x, this.pos.y, 10 * this.mass, 0, 360)
     ctx.fillStyle = colors.brand
     ctx.fill()
   }

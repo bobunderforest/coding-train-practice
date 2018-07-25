@@ -45,11 +45,14 @@ export const GravityAttraction = () => (
       onMouseUp: () => (drawState.isMoving = false),
     })}
     setup={({ width, height }) => {
-      const guys = Array.from(Array(3)).map(
-        () => new Mover(random(0, width), random(0, height)),
-      )
-      const initForce = new Vector(10, 0)
-      guys.forEach(guy => guy.applyForce(initForce))
+      const guys = Array.from(Array(3)).map(() => {
+        const avRange = (height - 400) / 2 + 200
+        const range = random(0, avRange)
+        const initForce = new Vector((avRange - range) / 10, 0)
+        const guy = new Mover(width / 2, range)
+        guy.applyForce(initForce)
+        return guy
+      })
       return {
         attractor: new Attractor(width / 2, height / 2),
         guys,

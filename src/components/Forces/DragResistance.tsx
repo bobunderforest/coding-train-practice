@@ -3,6 +3,7 @@ import { DemoPage } from 'components/Layout/DemoPage'
 import { Mover } from './Mover'
 import { random, sqr } from 'utils'
 import { colors } from 'utils/styles'
+import { links } from 'utils/links'
 
 interface DrawState {
   guys?: Mover[]
@@ -12,6 +13,7 @@ const Page = DemoPage as new () => DemoPage<DrawState>
 
 export const DragResistance = () => (
   <Page
+    next={links.gravityAttraction}
     srcLink="Forces/DragResistance.tsx"
     setup={({ width }) => ({
       guys: Array.from(Array(6)).map(

@@ -18,4 +18,8 @@ export const links = {
     link: withBase('/drag-resistance/'),
     text: 'Drag Resistance',
   },
+  gravityAttraction: {
+    link: withBase('/gravity-attraction/'),
+    text: 'Gravity Attraction',
+  },
 }

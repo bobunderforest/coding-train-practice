@@ -47,5 +47,6 @@ export const Home = () => (
     <LinkWithText {...links.vectors} />
     <LinkWithText {...links.forces} />
     <LinkWithText {...links.dragResistance} />
+    <LinkWithText {...links.gravityAttraction} />
   </Wrap>
 )

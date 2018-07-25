@@ -3,6 +3,7 @@ import { Home } from 'components/Home'
 import { Vectors } from 'components/Vectors/Vectors'
 import { Forces } from 'components/Forces/Forces'
 import { DragResistance } from 'components/Forces/DragResistance'
+import { GravityAttraction } from 'components/Forces/GravityAttraction'
 import { AppContainer } from 'components/Layout/AppContainer'
 import { links } from 'utils/links'
 
@@ -34,6 +35,11 @@ export const routes: RouteConfig[] = [
         component: DragResistance,
         exact: true,
         path: links.dragResistance.link,
+      },
+      {
+        component: GravityAttraction,
+        exact: true,
+        path: links.gravityAttraction.link,
       },
     ],
   },

@@ -11,8 +11,8 @@ export class Mover {
   vel: Vector
   mass: number
 
-  constructor(pos: Vector) {
-    this.pos = pos
+  constructor(x: number, y: number) {
+    this.pos = new Vector(x, y)
     this.acc = new Vector(0, 0)
     this.vel = new Vector(0, 0)
     this.mass = random(1, 4)

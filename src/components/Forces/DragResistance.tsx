@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { DemoPage } from 'components/Layout/DemoPage'
-import { Vector } from 'components/Vectors/VectorMutable'
 import { Mover } from './Mover'
 import { random, sqr } from 'utils'
 import { colors } from 'utils/styles'
@@ -16,7 +15,7 @@ export const DragResistance = () => (
     srcLink="Forces/DragResistance.tsx"
     setup={({ width }) => ({
       guys: Array.from(Array(6)).map(
-        () => new Mover(new Vector(random(90, width - 90), 100)),
+        () => new Mover(random(90, width - 90), 100),
       ),
     })}
     render={({ ctx, width, height, drawState }) => {

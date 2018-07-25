@@ -25,7 +25,7 @@ export const Forces = () => (
     })}
     setup={({ width, height }) => ({
       guys: Array.from(Array(6)).map(
-        () => new Mover(new Vector(random(90, width - 90), height / 2)),
+        () => new Mover(random(90, width - 90), height / 2),
       ),
     })}
     render={({ ctx, width, height, drawState }) => {

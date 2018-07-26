@@ -39,7 +39,16 @@ export const Home = () => (
       Here I'm practicing in some math and physics programming while watching{' '}
       <a target="_blank" href="https://www.youtube.com/user/shiffman/videos">
         Coding Train Videos
-      </a>.
+      </a>
+      <br />
+      <br />
+      Sources are{' '}
+      <a
+        target="_blank"
+        href="https://github.com/manneredboor/coding-train-practice"
+      >
+        here
+      </a>
       <br />
       <br />
       You can check out the demos:
@@ -47,5 +56,15 @@ export const Home = () => (
     {Object.keys(links)
       .slice(1)
       .map(key => <LinkWithText {...(links as any)[key]} />)}
+    <br />
+    <div style={{ textAlign: 'right', opacity: 0.5 }}>
+      <a target="_blank" href="https://twitter.com/ManneredBoor">
+        my twitter
+      </a>
+      &nbsp; &nbsp; &nbsp;
+      <a target="_blank" href="https://www.instagram.com/bob.underforest/">
+        my insta
+      </a>
+    </div>
   </Wrap>
 )

@@ -44,6 +44,8 @@ export const Home = () => (
       <br />
       You can check out the demos:
     </p>
-    {Object.keys(links).map(key => <LinkWithText {...(links as any)[key]} />)}
+    {Object.keys(links)
+      .slice(1)
+      .map(key => <LinkWithText {...(links as any)[key]} />)}
   </Wrap>
 )

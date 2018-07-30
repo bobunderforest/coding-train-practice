@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "prettier": "prettier \"*/**/*.{js,jsx,ts,tsx,json,md}\" --write",
-    "build": "gnarly-react-app-build",
-    "build-static": "gnarly-react-app-build-static",
-    "build-all": "gnarly-react-app-build & gnarly-react-app-build-static",
-    "dev": "gnarly-react-app-dev",
-    "start": "gnarly-react-app-serve",
+    "build": "gnarly-app-build",
+    "build-static": "gnarly-app-build-static",
+    "build-all": "gnarly-app-build & gnarly-app-build-static",
+    "dev": "gnarly-app-dev",
+    "start": "gnarly-app-serve",
     "tslint": "tslint -p tsconfig.json -c ./tslint.json \"./src/**/*.ts?(x)\""
   },
   "pre-commit": [
@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@gnarlycode/react-app-tools": "^1.6.0",
+    "@gnarlycode/react-app-tools": "^2.0.1",
     "@gnarlycode/react-scroll-state": "^1.0.4",
     "@gnarlycode/react-styled-css-transition": "^1.0.1",
     "is-in-browser": "^1.1.3",

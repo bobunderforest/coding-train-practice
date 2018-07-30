@@ -26,4 +26,8 @@ export const links = {
     link: withBase('/mutal-attraction/'),
     text: 'Mutal Attraction',
   },
+  portDefender: {
+    link: withBase('/port-defender/'),
+    text: 'Port Defender',
+  },
 }

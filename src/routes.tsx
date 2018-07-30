@@ -1,3 +1,4 @@
+import { links } from 'utils/links'
 import { RouteConfig } from 'react-router-config'
 import { Home } from 'components/Home'
 import { Vectors } from 'components/Vectors/Vectors'
@@ -6,7 +7,7 @@ import { DragResistance } from 'components/Forces/DragResistance'
 import { GravityAttraction } from 'components/Forces/GravityAttraction'
 import { MutalAttraction } from 'components/Forces/MutalAttraction'
 import { AppContainer } from 'components/Layout/AppContainer'
-import { links } from 'utils/links'
+import { PortDefender } from 'components/PortDefender/PortDefender'
 
 export const routes: RouteConfig[] = [
   {
@@ -46,6 +47,11 @@ export const routes: RouteConfig[] = [
         component: MutalAttraction,
         exact: true,
         path: links.mutalAttraction.link,
+      },
+      {
+        component: PortDefender,
+        exact: true,
+        path: links.portDefender.link,
       },
     ],
   },

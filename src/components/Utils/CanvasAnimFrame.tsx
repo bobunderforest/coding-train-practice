@@ -72,15 +72,16 @@ export class CanvasAnimFrame extends React.PureComponent<
     const { render, width, height, ...restProps } = this.props
     return (
       <canvas
-        style={{
-          display: 'block',
-          height: height || '100%',
-          width: width || '100%',
-        }}
         height={height * this.scale || ''}
         width={width * this.scale || ''}
         ref={this.canvas}
         {...restProps}
+        style={{
+          display: 'block',
+          height: height || '100%',
+          width: width || '100%',
+          ...(restProps.style ? restProps.style : {}),
+        }}
       />
     )
   }

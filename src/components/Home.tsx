@@ -58,11 +58,11 @@ export const Home = () => (
       .map(key => <LinkWithText {...(links as any)[key]} />)}
     <br />
     <div style={{ textAlign: 'right', opacity: 0.5 }}>
-      <a target="_blank" href="https://twitter.com/ManneredBoor">
+      <a target="_blank" href="https://twitter.com/dmitrypodlesny">
         my twitter
       </a>
       &nbsp; &nbsp; &nbsp;
-      <a target="_blank" href="https://www.instagram.com/bob.underforest/">
+      <a target="_blank" href="https://www.instagram.com/under.forest/">
         my insta
       </a>
     </div>

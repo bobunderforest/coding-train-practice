@@ -55,7 +55,7 @@ export const Home = () => (
     </p>
     {Object.keys(links)
       .slice(1)
-      .map(key => <LinkWithText {...(links as any)[key]} />)}
+      .map((key, i) => <LinkWithText key={i} {...(links as any)[key]} />)}
     <br />
     <div style={{ textAlign: 'right', opacity: 0.5 }}>
       <a target="_blank" href="https://twitter.com/dmitrypodlesny">

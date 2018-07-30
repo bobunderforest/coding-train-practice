@@ -30,3 +30,7 @@ export const throttle = (fn: () => void, threshold: number = 100) => {
     }
   }
 }
+
+// Todo:
+// constrain
+// map

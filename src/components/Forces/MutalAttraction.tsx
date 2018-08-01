@@ -4,7 +4,7 @@ import { Vector } from 'components/Vectors/VectorMutable'
 import { gravityAttraction } from './GravityAttraction'
 import { Mover } from './Mover'
 import { random } from 'utils'
-// import { links } from 'utils/links'
+import { links } from 'utils/links'
 
 interface DrawState {
   guys: Mover[]
@@ -16,7 +16,7 @@ const Page = DemoPage as new () => DemoPage<DrawState>
 export const MutalAttraction = () => (
   <Page
     hint="click to create"
-    // next={links.}
+    next={links.portDefender}
     srcLink="Forces/MutalAttraction.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () =>

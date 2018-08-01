@@ -10,19 +10,20 @@ import { random, sqr } from 'utils'
 const WATER_HEIGHT = 200
 const GROUND_HEIGHT = WATER_HEIGHT + 5
 const GROUND_WIDTH = 200
+const RELOAD_TIME = 800
+
+const waterResist = (vel: Vector) => {
+  const coeff = -0.005
+  const drag = vel.copy()
+  const speed = vel.mag()
+  drag.mult(coeff * sqr(speed))
+  return drag
+}
 
 class Missle extends Mover {
   constructor(pos: Vector) {
     super(pos.x, pos.y)
     this.mass = 10
-  }
-
-  applyWaterResistance() {
-    const coeff = -0.005
-    const drag = this.vel.copy()
-    const speed = this.vel.mag()
-    drag.mult(coeff * sqr(speed))
-    this.applyForce(drag)
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -34,16 +35,57 @@ class Missle extends Mover {
 }
 
 class Enemy extends Mover {
-  constructor(pos: Vector) {
-    super(pos.x, pos.y)
-    this.mass = 20
+  width: number = 120
+  height: number = 40
+  isDead: boolean = false
+
+  ang: number = 0
+  angVel: number = 0
+  angAcc: number = 0
+
+  constructor(x: number, y: number) {
+    super(x, y)
+    this.mass = 30
+  }
+
+  update(x: number, y: number) {
+    this.vel.add(this.acc)
+    this.pos.add(this.vel)
+    this.acc = new Vector(0, 0)
+
+    this.angVel += this.angAcc
+    this.ang += this.angVel
+    this.angAcc = 0
+  }
+
+  applyAngForce(f: number) {
+    this.angAcc += f
   }
 
   render(ctx: CanvasRenderingContext2D) {
+    ctx.save()
     ctx.beginPath()
-    ctx.arc(this.pos.x, this.pos.y, 15, 0, 360)
-    ctx.fillStyle = '#ee3'
+
+    ctx.fillStyle = this.isDead ? '#611' : '#e33'
+
+    ctx.translate(this.pos.x, this.pos.y)
+    ctx.rotate((this.ang * Math.PI) / 180)
+
+    const top = -2 * (this.height / 3)
+    ctx.moveTo(-this.width / 2, top)
+    ctx.lineTo(-this.width / 4, this.height / 3)
+    ctx.lineTo(this.width / 2, this.height / 3)
+    ctx.lineTo(this.width / 2, top)
+
+    // Cabin
+    ctx.lineTo(this.width / 2 - 10, top)
+    ctx.lineTo(this.width / 2 - 10, top - 5)
+    ctx.lineTo(0, top - 10)
+    ctx.lineTo(0, top + 5)
+
+    ctx.closePath()
     ctx.fill()
+    ctx.restore()
   }
 }
 
@@ -60,6 +102,7 @@ interface DrawState {
   missles: Missle[]
   mouse: Vector
   nextSpawn?: number
+  reloadStart?: number
 }
 
 const Page = DemoPage as new () => DemoPage<DrawState>
@@ -91,7 +134,7 @@ export const PortDefender = () => (
       // ),
     })}
     render={({ ctx, width, height, drawState, time }) => {
-      const { mouse, cannon, fire, missles } = drawState
+      const { mouse, cannon, fire, missles, reloadStart, enemies } = drawState
 
       const adjY = (x: number) => height - x
       const adjV = (v: Vector) => new Vector(v.x, adjY(v.y))
@@ -119,24 +162,65 @@ export const PortDefender = () => (
 
       // Fire
       if (fire) {
-        const newMissle = new Missle(cannonPos)
-        newMissle.applyForce(cannonToMouse)
-        drawState.missles.push(newMissle)
+        if (!reloadStart || time >= reloadStart + RELOAD_TIME) {
+          const newMissle = new Missle(cannonPos)
+          newMissle.applyForce(cannonToMouse)
+          drawState.missles.push(newMissle)
+          drawState.reloadStart = time
+        }
         drawState.fire = false
       }
 
-      const toRemove: number[] = []
-      drawState.missles.forEach((m, i) => {
-        if (m.pos.y > waterH) m.applyWaterResistance()
+      const misslesToRemove: number[] = []
+      missles.forEach((m, i) => {
+        if (m.pos.y > waterH) m.applyForce(waterResist(m.vel))
         m.gravity()
         m.update(width, height)
         m.render(ctx)
-        if (m.pos.y > height) toRemove.push(i)
+        if (m.pos.y > height) misslesToRemove.push(i)
       })
-      toRemove.forEach(i => missles.splice(i, 1))
+      misslesToRemove.forEach(i => missles.splice(i, 1))
 
       // Enemies
-      if (!drawState.nextSpawn) drawState.nextSpawn = random(100, 400)
+      if (drawState.nextSpawn && drawState.nextSpawn <= time) {
+        const newEnemy = new Enemy(width, waterH)
+        newEnemy.applyForce(new Vector(-100, 0))
+        drawState.enemies.push(newEnemy)
+        drawState.nextSpawn = undefined
+      }
+      if (!drawState.nextSpawn) {
+        drawState.nextSpawn = time + random(1000, 4000)
+      }
+
+      const enemiesToRemove: number[] = []
+      enemies.forEach((e, i) => {
+        if (!e.isDead) {
+          const eX1 = e.pos.x - e.width / 2
+          const eX2 = e.pos.x + e.width / 2
+          const eY1 = e.pos.y - e.height / 2
+          const eY2 = e.pos.y + e.height / 2
+          missles.forEach(m => {
+            if (
+              m.pos.x > eX1 &&
+              m.pos.x < eX2 &&
+              m.pos.y > eY1 &&
+              m.pos.y < eY2
+            ) {
+              e.isDead = true
+              m.applyForce(e.vel)
+              e.applyForce(m.vel)
+              e.applyAngForce(2)
+            }
+          })
+        } else {
+          e.gravity()
+          e.applyForce(waterResist(e.vel))
+        }
+        e.update(width, height)
+        e.render(ctx)
+        if (e.pos.y > height || e.pos.x < 0) misslesToRemove.push(i)
+      })
+      enemiesToRemove.forEach(i => missles.splice(i, 1))
 
       // Draw Scene
       ctx.fillStyle = '#dd3'

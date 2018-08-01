@@ -133,7 +133,7 @@ export const PortDefender = () => (
         }
         e.update(width, height)
         e.render(ctx)
-        if (e.pos.y > height || e.pos.x < 0) misslesToRemove.push(i)
+        if (e.pos.y > height || e.pos.x < 0) enemiesToRemove.push(i)
       })
       enemiesToRemove.forEach(i => missles.splice(i, 1))
 

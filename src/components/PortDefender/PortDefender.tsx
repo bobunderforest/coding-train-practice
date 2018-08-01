@@ -1,93 +1,14 @@
 import * as React from 'react'
 import { DemoPage } from '../Layout/DemoPage'
 import { Vector } from '../Vectors/VectorMutable'
-import { Mover } from '../Forces/Mover'
-import { random, sqr } from 'utils'
-// import { links } from 'utils/links'
-
-// const windForce = new Vector(0.5, 0)
+import { random } from 'utils'
+import { drawScene, drawCannon } from './drawers'
+import { waterResist, Missle, Enemy } from './physics'
 
 const WATER_HEIGHT = 200
 const GROUND_HEIGHT = WATER_HEIGHT + 5
 const GROUND_WIDTH = 200
 const RELOAD_TIME = 800
-
-const waterResist = (vel: Vector) => {
-  const coeff = -0.005
-  const drag = vel.copy()
-  const speed = vel.mag()
-  drag.mult(coeff * sqr(speed))
-  return drag
-}
-
-class Missle extends Mover {
-  constructor(pos: Vector) {
-    super(pos.x, pos.y)
-    this.mass = 10
-  }
-
-  render(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath()
-    ctx.arc(this.pos.x, this.pos.y, 15, 0, 360)
-    ctx.fillStyle = '#000'
-    ctx.fill()
-  }
-}
-
-class Enemy extends Mover {
-  width: number = 120
-  height: number = 40
-  isDead: boolean = false
-
-  ang: number = 0
-  angVel: number = 0
-  angAcc: number = 0
-
-  constructor(x: number, y: number) {
-    super(x, y)
-    this.mass = 30
-  }
-
-  update(x: number, y: number) {
-    this.vel.add(this.acc)
-    this.pos.add(this.vel)
-    this.acc = new Vector(0, 0)
-
-    this.angVel += this.angAcc
-    this.ang += this.angVel
-    this.angAcc = 0
-  }
-
-  applyAngForce(f: number) {
-    this.angAcc += f
-  }
-
-  render(ctx: CanvasRenderingContext2D) {
-    ctx.save()
-    ctx.beginPath()
-
-    ctx.fillStyle = this.isDead ? '#611' : '#e33'
-
-    ctx.translate(this.pos.x, this.pos.y)
-    ctx.rotate((this.ang * Math.PI) / 180)
-
-    const top = -2 * (this.height / 3)
-    ctx.moveTo(-this.width / 2, top)
-    ctx.lineTo(-this.width / 4, this.height / 3)
-    ctx.lineTo(this.width / 2, this.height / 3)
-    ctx.lineTo(this.width / 2, top)
-
-    // Cabin
-    ctx.lineTo(this.width / 2 - 10, top)
-    ctx.lineTo(this.width / 2 - 10, top - 5)
-    ctx.lineTo(0, top - 10)
-    ctx.lineTo(0, top + 5)
-
-    ctx.closePath()
-    ctx.fill()
-    ctx.restore()
-  }
-}
 
 interface Cannon {
   h: number
@@ -118,7 +39,6 @@ export const PortDefender = () => (
         drawState.mouse.y = e.pageY
       },
       style: { cursor: 'crosshair' },
-      // onMouseUp: () => (drawState.isWind = false),
     })}
     setup={({ width, height }) => ({
       cannon: {
@@ -129,9 +49,6 @@ export const PortDefender = () => (
       enemies: [],
       missles: [],
       mouse: new Vector(width / 2, height / 2),
-      // guys: Array.from(Array(6)).map(
-      //   () => new Mover(random(90, width - 90), height / 2),
-      // ),
     })}
     render={({ ctx, width, height, drawState, time }) => {
       const { mouse, cannon, fire, missles, reloadStart, enemies } = drawState
@@ -142,9 +59,8 @@ export const PortDefender = () => (
       const waterH = adjY(WATER_HEIGHT)
       const groundH = adjY(GROUND_HEIGHT)
 
-      // Calc Cannon
+      // Calc cannon properties
       const cannonPos = adjV(cannon.pos)
-
       const cannonToMouse = mouse.copy()
       cannonToMouse.sub(cannonPos)
       let angle = Math.atan(cannonToMouse.y / cannonToMouse.x)
@@ -171,6 +87,7 @@ export const PortDefender = () => (
         drawState.fire = false
       }
 
+      // Process existing missles
       const misslesToRemove: number[] = []
       missles.forEach((m, i) => {
         if (m.pos.y > waterH) m.applyForce(waterResist(m.vel))
@@ -181,7 +98,7 @@ export const PortDefender = () => (
       })
       misslesToRemove.forEach(i => missles.splice(i, 1))
 
-      // Enemies
+      // Spawn new enemy
       if (drawState.nextSpawn && drawState.nextSpawn <= time) {
         const newEnemy = new Enemy(width, waterH)
         newEnemy.applyForce(new Vector(-100, 0))
@@ -192,19 +109,17 @@ export const PortDefender = () => (
         drawState.nextSpawn = time + random(1000, 4000)
       }
 
+      // Process existing enemy
       const enemiesToRemove: number[] = []
       enemies.forEach((e, i) => {
         if (!e.isDead) {
-          const eX1 = e.pos.x - e.width / 2
-          const eX2 = e.pos.x + e.width / 2
-          const eY1 = e.pos.y - e.height / 2
-          const eY2 = e.pos.y + e.height / 2
           missles.forEach(m => {
+            // Calc missle collisions
             if (
-              m.pos.x > eX1 &&
-              m.pos.x < eX2 &&
-              m.pos.y > eY1 &&
-              m.pos.y < eY2
+              m.pos.x > e.pos.x - e.width / 2 &&
+              m.pos.x < e.pos.x + e.width / 2 &&
+              m.pos.y > e.pos.y - e.height / 2 &&
+              m.pos.y < e.pos.y + e.height / 2
             ) {
               e.isDead = true
               m.applyForce(e.vel)
@@ -223,45 +138,25 @@ export const PortDefender = () => (
       enemiesToRemove.forEach(i => missles.splice(i, 1))
 
       // Draw Scene
-      ctx.fillStyle = '#dd3'
-      ctx.fillRect(0, groundH, GROUND_WIDTH, 10)
-
-      ctx.fillStyle = '#533'
-      ctx.fillRect(0, waterH + 5, GROUND_WIDTH, height)
-
-      ctx.globalAlpha = 0.6
-      ctx.fillStyle = '#46d'
-      ctx.fillRect(GROUND_WIDTH, waterH, width - GROUND_WIDTH, WATER_HEIGHT)
-      ctx.globalAlpha = 1
-
-      // Prepare to draw cannon
-      ctx.save()
-      ctx.translate(cannonPos.x, cannonPos.y)
-
-      // Draw Line
-      ctx.beginPath()
-      ctx.moveTo(0, 0)
-      ctx.lineTo(cannonToMouse.x, cannonToMouse.y)
-      ctx.strokeStyle = '#f77'
-      ctx.lineWidth = 20
-      ctx.globalAlpha = 0.1
-      ctx.stroke()
-      ctx.globalAlpha = 1
+      drawScene({
+        GROUND_WIDTH,
+        WATER_HEIGHT,
+        ctx,
+        groundH,
+        height,
+        waterH,
+        width,
+      })
 
       // Draw Cannon
-      ctx.save()
-      ctx.rotate(angle)
-      ctx.fillStyle = '#222'
-      ctx.fillRect(-20, -(cannon.h / 2), cannon.w, cannon.h)
-      ctx.fillRect(-25, -4, 6, 9)
-      ctx.restore()
-
-      const holderH = cannon.pos.y - GROUND_HEIGHT + 5
-      ctx.fillStyle = '#333'
-      ctx.fillRect(-5, -5, 10, holderH)
-      ctx.fillRect(-30, holderH - 5, 60, 10)
-
-      ctx.restore()
+      drawCannon({
+        GROUND_HEIGHT,
+        angle,
+        cannon,
+        cannonPos,
+        cannonToMouse,
+        ctx,
+      })
     }}
   />
 )

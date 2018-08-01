@@ -135,7 +135,7 @@ export const PortDefender = () => (
         e.render(ctx)
         if (e.pos.y > height || e.pos.x < 0) enemiesToRemove.push(i)
       })
-      enemiesToRemove.forEach(i => missles.splice(i, 1))
+      enemiesToRemove.forEach(i => enemies.splice(i, 1))
 
       // Draw Scene
       drawScene({

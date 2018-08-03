@@ -30,4 +30,8 @@ export const links = {
     link: withBase('/port-defender/'),
     text: 'Port Defender',
   },
+  harmonicMotion: {
+    link: withBase('/harmonic-motion/'),
+    text: 'Harmonic Motion',
+  },
 }

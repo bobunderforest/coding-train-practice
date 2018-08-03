@@ -8,6 +8,7 @@ import { GravityAttraction } from 'components/Forces/GravityAttraction'
 import { MutalAttraction } from 'components/Forces/MutalAttraction'
 import { AppContainer } from 'components/Layout/AppContainer'
 import { PortDefender } from 'components/PortDefender/PortDefender'
+import { HarmonicMotion } from 'components/HarmonicMotion/HarmonicMotion'
 
 export const routes: RouteConfig[] = [
   {
@@ -52,6 +53,11 @@ export const routes: RouteConfig[] = [
         component: PortDefender,
         exact: true,
         path: links.portDefender.link,
+      },
+      {
+        component: HarmonicMotion,
+        exact: true,
+        path: links.harmonicMotion.link,
       },
     ],
   },

@@ -4,6 +4,7 @@ import { Vector } from '../Vectors/VectorMutable'
 import { random } from 'utils'
 import { drawScene, drawCannon } from './drawers'
 import { waterResist, Missle, Enemy } from './physics'
+import { links } from 'utils/links'
 
 const WATER_HEIGHT = 200
 const GROUND_HEIGHT = WATER_HEIGHT + 5
@@ -30,7 +31,7 @@ const Page = DemoPage as new () => DemoPage<DrawState>
 
 export const PortDefender = () => (
   <Page
-    // next={links.dragResistance}
+    next={links.harmonicMotion}
     srcLink="PortDefender/PortDefender.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () => (drawState.fire = true),

@@ -1,14 +1,15 @@
 import { links } from 'utils/links'
 import { RouteConfig } from 'react-router-config'
-import { Home } from 'components/Home'
-import { Vectors } from 'components/Vectors/Vectors'
-import { Forces } from 'components/Forces/Forces'
-import { DragResistance } from 'components/Forces/DragResistance'
-import { GravityAttraction } from 'components/Forces/GravityAttraction'
-import { MutalAttraction } from 'components/Forces/MutalAttraction'
 import { AppContainer } from 'components/Layout/AppContainer'
-import { PortDefender } from 'components/PortDefender/PortDefender'
+import { DragResistance } from 'components/Forces/DragResistance'
+import { Forces } from 'components/Forces/Forces'
+import { GravityAttraction } from 'components/Forces/GravityAttraction'
 import { HarmonicMotion } from 'components/HarmonicMotion/HarmonicMotion'
+import { Home } from 'components/Home'
+import { MutalAttraction } from 'components/Forces/MutalAttraction'
+import { Pendulum } from 'components/Pendulum/Pendulum'
+import { PortDefender } from 'components/PortDefender/PortDefender'
+import { Vectors } from 'components/Vectors/Vectors'
 
 export const routes: RouteConfig[] = [
   {
@@ -58,6 +59,11 @@ export const routes: RouteConfig[] = [
         component: HarmonicMotion,
         exact: true,
         path: links.harmonicMotion.link,
+      },
+      {
+        component: Pendulum,
+        exact: true,
+        path: links.pendulum.link,
       },
     ],
   },

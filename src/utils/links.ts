@@ -34,4 +34,8 @@ export const links = {
     link: withBase('/harmonic-motion/'),
     text: 'Harmonic Motion',
   },
+  pendulum: {
+    link: withBase('/pendulum/'),
+    text: 'Pendulum',
+  },
 }

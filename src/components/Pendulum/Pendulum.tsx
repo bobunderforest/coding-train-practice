@@ -4,57 +4,100 @@ import { Vector } from '../Vectors/VectorMutable'
 import { colors } from 'utils/styles'
 // import { links } from 'utils/links'
 
-interface DrawState {
-  aAcc: number
-  aVel: number
+const G = 0.0009
+
+interface PendulumMoverArgs {
   angle: number
-  bob: Vector
+  mass: number
   len: number
   origin: Vector
 }
 
-const Page = DemoPage as new () => DemoPage<DrawState>
+class PendulumMover {
+  aAcc: number
+  aVel: number
+  angle: number
+  mass: number
+  bob: Vector
+  len: number
+  origin: Vector
 
-const G = 0.005
+  constructor(args: PendulumMoverArgs) {
+    this.aAcc = 0
+    this.aVel = 0
+    this.angle = args.angle
+    this.bob = new Vector(0, 0)
+    this.len = args.len
+    this.mass = args.mass
+    this.origin = args.origin
+  }
+
+  update() {
+    this.aAcc = -G * this.mass * Math.sin(this.angle)
+    this.aVel += this.aAcc
+    this.angle += this.aVel
+    this.aVel *= 0.999
+
+    this.bob.x = this.origin.x + this.len * Math.sin(this.angle)
+    this.bob.y = this.origin.y + this.len * Math.cos(this.angle)
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    ctx.save()
+
+    ctx.beginPath()
+    ctx.moveTo(this.origin.x, this.origin.y)
+    ctx.lineTo(this.bob.x, this.bob.y)
+
+    ctx.strokeStyle = '#ccc'
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.arc(this.bob.x, this.bob.y, 20 * Math.pow(this.mass, 2), 0, 360)
+    ctx.fillStyle = colors.brand
+    ctx.fill()
+
+    ctx.restore()
+  }
+}
+
+interface DrawState {
+  pendulums: PendulumMover[]
+}
+
+const Page = DemoPage as new () => DemoPage<DrawState>
 
 export const Pendulum = () => (
   <Page
     // next={links.dragResistance}
     srcLink="Pendulum/Pendulum.tsx"
     setup={({ width, height }) => ({
-      aAcc: 0,
-      aVel: 0,
-      angle: Math.PI / 4,
-      bob: new Vector(width / 2, height / 2),
-      len: height * 0.75,
-      origin: new Vector(width / 2, 0),
+      pendulums: [
+        new PendulumMover({
+          angle: Math.PI / 4,
+          len: height * 0.5,
+          mass: 0.9,
+          origin: new Vector(width * 0.25, 0),
+        }),
+        new PendulumMover({
+          angle: Math.PI / 4,
+          len: height * 0.5,
+          mass: 1,
+          origin: new Vector(width * 0.5, 0),
+        }),
+        new PendulumMover({
+          angle: Math.PI / 4,
+          len: height * 0.5,
+          mass: 1.1,
+          origin: new Vector(width * 0.75, 0),
+        }),
+      ],
     })}
     render={({ ctx, width, height, drawState, time }) => {
-      drawState.angle += drawState.aVel
-      drawState.aVel += drawState.aAcc
-      drawState.aAcc = -G * Math.sin(drawState.angle)
-      drawState.aVel *= 0.99
-
-      const { angle, bob, len, origin } = drawState
-
-      bob.x = origin.x + len * Math.sin(angle)
-      bob.y = origin.y + len * Math.cos(angle)
-
-      ctx.save()
-
-      ctx.beginPath()
-      ctx.moveTo(origin.x, origin.y)
-      ctx.lineTo(bob.x, bob.y)
-
-      ctx.strokeStyle = '#ccc'
-      ctx.stroke()
-
-      ctx.beginPath()
-      ctx.arc(bob.x, bob.y, 20, 0, 360)
-      ctx.fillStyle = colors.brand
-      ctx.fill()
-
-      ctx.restore()
+      drawState.pendulums.forEach(p => {
+        p.update()
+        p.draw(ctx)
+      })
     }}
   />
 )

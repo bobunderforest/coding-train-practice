@@ -9,6 +9,7 @@ import { Home } from 'components/Home'
 import { MutalAttraction } from 'components/Forces/MutalAttraction'
 import { Pendulum } from 'components/Pendulum/Pendulum'
 import { PortDefender } from 'components/PortDefender/PortDefender'
+import { Spring } from 'components/Pendulum/Spring'
 import { Vectors } from 'components/Vectors/Vectors'
 
 export const routes: RouteConfig[] = [
@@ -64,6 +65,11 @@ export const routes: RouteConfig[] = [
         component: Pendulum,
         exact: true,
         path: links.pendulum.link,
+      },
+      {
+        component: Spring,
+        exact: true,
+        path: links.spring.link,
       },
     ],
   },

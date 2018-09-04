@@ -2,7 +2,7 @@ import * as React from 'react'
 import { DemoPage } from '../Layout/DemoPage'
 import { Vector } from '../Vectors/VectorMutable'
 import { colors } from 'utils/styles'
-// import { links } from 'utils/links'
+import { links } from 'utils/links'
 
 const G = 0.0009
 
@@ -69,7 +69,7 @@ const Page = DemoPage as new () => DemoPage<DrawState>
 
 export const Pendulum = () => (
   <Page
-    // next={links.dragResistance}
+    next={links.spring}
     srcLink="Pendulum/Pendulum.tsx"
     setup={({ width, height }) => ({
       pendulums: [

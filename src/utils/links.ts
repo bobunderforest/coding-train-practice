@@ -38,4 +38,8 @@ export const links = {
     link: withBase('/pendulum/'),
     text: 'Pendulum',
   },
+  spring: {
+    link: withBase('/spring/'),
+    text: 'Spring',
+  },
 }

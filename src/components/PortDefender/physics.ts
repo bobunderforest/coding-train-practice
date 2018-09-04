@@ -39,7 +39,7 @@ export class Enemy extends Mover {
     this.mass = 30
   }
 
-  update(x: number, y: number) {
+  update() {
     this.vel.add(this.acc)
     this.pos.add(this.vel)
     this.acc = new Vector(0, 0)

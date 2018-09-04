@@ -37,7 +37,7 @@ export const Forces = () => (
         guy.gravity()
 
         guy.edges(width, height)
-        guy.update(width, height)
+        guy.update()
         guy.render(ctx)
       })
     }}

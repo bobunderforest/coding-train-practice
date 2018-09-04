@@ -93,7 +93,7 @@ export const PortDefender = () => (
       missles.forEach((m, i) => {
         if (m.pos.y > waterH) m.applyForce(waterResist(m.vel))
         m.gravity()
-        m.update(width, height)
+        m.update()
         m.render(ctx)
         if (m.pos.y > height) misslesToRemove.push(i)
       })
@@ -132,7 +132,7 @@ export const PortDefender = () => (
           e.gravity()
           e.applyForce(waterResist(e.vel))
         }
-        e.update(width, height)
+        e.update()
         e.render(ctx)
         if (e.pos.y > height || e.pos.x < 0) enemiesToRemove.push(i)
       })

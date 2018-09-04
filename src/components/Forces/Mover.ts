@@ -36,7 +36,7 @@ export class Mover {
     this.applyForce(gravityForce)
   }
 
-  update(x: number, y: number) {
+  update() {
     // Apply acc to velocity and velocity to position
     this.vel.add(this.acc)
     this.pos.add(this.vel)

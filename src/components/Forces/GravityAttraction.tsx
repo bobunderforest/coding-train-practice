@@ -88,7 +88,7 @@ export const GravityAttraction = () => (
 
       guys.forEach(guy => {
         gravityAttraction(attractor, guy)
-        guy.update(width, height)
+        guy.update()
         guy.render(ctx)
       })
 

@@ -40,7 +40,7 @@ export const MutalAttraction = () => (
       guys.forEach(guy => {
         guys.forEach(guy2 => gravityAttraction(guy, guy2))
         guy.edgesLoop(width, height)
-        guy.update(width, height)
+        guy.update()
         guy.render(ctx)
       })
     }}

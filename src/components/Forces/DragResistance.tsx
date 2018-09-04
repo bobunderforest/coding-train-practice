@@ -50,7 +50,7 @@ export const DragResistance = () => (
         }
 
         guy.edges(width, height)
-        guy.update(width, height)
+        guy.update()
         guy.render(ctx)
       })
     }}

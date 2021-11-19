@@ -5,43 +5,36 @@ import { Mover } from '../Forces/Mover'
 // import { links } from 'utils/links'
 
 interface SpringArgs {
-  origin: Vector
+  anchor: Vector
   restLen: number
-  startPos: Vector
 }
 
 class SpringMover {
-  bob: Mover
-  origin: Vector
+  anchor: Vector
   restLen: number
   elastic: number = 0.025
 
   constructor(args: SpringArgs) {
-    this.origin = args.origin.copy()
+    this.anchor = args.anchor.copy()
     this.restLen = args.restLen
-    this.bob = new Mover(args.startPos.x, args.startPos.y)
   }
 
-  // TODO: connect(mover: Mover)
-
-  update() {
-    const springF = this.bob.pos.copy()
-    springF.sub(this.origin)
-    const currLen = springF.mag()
+  connect(bob: Mover) {
+    const springForce = bob.pos.copy()
+    springForce.sub(this.anchor)
+    const currLen = springForce.mag()
     const stretch = currLen - this.restLen
-    springF.norm()
-    springF.mult(-this.elastic * stretch)
-    this.bob.applyForce(springF)
-    this.bob.update()
+    springForce.norm()
+    springForce.mult(-this.elastic * stretch)
+    bob.applyForce(springForce)
   }
 
-  render(ctx: CanvasRenderingContext2D) {
+  render(ctx: CanvasRenderingContext2D, target: Vector) {
     ctx.beginPath()
-    ctx.moveTo(this.origin.x, this.origin.y)
-    ctx.lineTo(this.bob.pos.x, this.bob.pos.y)
+    ctx.moveTo(this.anchor.x, this.anchor.y)
+    ctx.lineTo(target.x, target.y)
     ctx.strokeStyle = '#ccc'
     ctx.stroke()
-    this.bob.render(ctx)
   }
 }
 
@@ -49,6 +42,7 @@ const windForce = new Vector(0.5, 0)
 
 interface DrawState {
   isWind?: boolean
+  bob: Mover
   spring: SpringMover
 }
 
@@ -64,18 +58,21 @@ export const Spring = () => (
       onMouseUp: () => (drawState.isWind = false),
     })}
     setup={({ width, height }) => ({
+      bob: new Mover(width * 0.5, height * 0.7),
       spring: new SpringMover({
-        // mass: 1,
-        origin: new Vector(width * 0.5, 0),
+        anchor: new Vector(width * 0.5, 0),
         restLen: height * 0.5,
-        startPos: new Vector(width * 0.5, height * 0.7),
       }),
     })}
     render={({ ctx, width, height, drawState, time }) => {
-      if (drawState.isWind) drawState.spring.bob.applyForce(windForce)
-      drawState.spring.bob.gravity()
-      drawState.spring.update()
-      drawState.spring.render(ctx)
+      drawState.bob.gravity()
+      if (drawState.isWind) drawState.bob.applyForce(windForce)
+
+      drawState.spring.connect(drawState.bob)
+      drawState.bob.update()
+
+      drawState.spring.render(ctx, drawState.bob.pos)
+      drawState.bob.render(ctx)
     }}
   />
 )

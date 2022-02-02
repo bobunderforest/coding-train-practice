@@ -1,31 +1,27 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "baseUrl": "src/",
-    "experimentalDecorators": true,
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "inlineSourceMap": false,
-    "inlineSources": true,
-    "jsx": "react",
-    "lib": ["dom", "es6", "es2015", "es2017", "es2018"],
-    "module": "es6",
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "newLine": "LF",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
     "strictNullChecks": true,
     "noImplicitAny": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "outDir": "build",
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin",
-        "tags": ["styled", "css", "transition", "injectGlobal"]
-      }
-    ],
-    "sourceMap": true,
     "strictFunctionTypes": false,
-    "target": "es6"
+    "newLine": "LF"
   },
-  "exclude": ["node_modules", "build"],
-  "include": ["src/**/*", "./typings/**/*"]
+  "include": ["src/**/*", "src"]
 }

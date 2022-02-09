@@ -15,7 +15,7 @@ export const Forces = () => (
   <PageDemo<DrawState>
     hint="click for wind"
     next={links.dragResistance}
-    srcLink="Forces/Forces.tsx"
+    srcLink="02-Forces/Forces.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () => (drawState.isWind = true),
       onMouseUp: () => (drawState.isWind = false),

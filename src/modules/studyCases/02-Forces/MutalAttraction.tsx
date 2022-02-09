@@ -14,7 +14,7 @@ export const MutalAttraction = () => (
   <PageDemo<DrawState>
     hint="click to create"
     next={links.portDefender}
-    srcLink="Forces/MutalAttraction.tsx"
+    srcLink="02-Forces/MutalAttraction.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () =>
         drawState.mouse &&

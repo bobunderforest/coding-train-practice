@@ -29,7 +29,7 @@ type DrawState = {
 export const PortDefender = () => (
   <PageDemo<DrawState>
     next={links.harmonicMotion}
-    srcLink="PortDefender/PortDefender.tsx"
+    srcLink="03-PortDefender/PortDefender.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () => (drawState.fire = true),
       onMouseMove: e => {

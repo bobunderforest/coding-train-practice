@@ -119,7 +119,7 @@ export function DemoLayoutControls({
       {srcLink && (
         <Source
           href={
-            'https://github.com/manneredboor/coding-train-practice/blob/master/src/components/' +
+            'https://github.com/manneredboor/coding-train-practice/blob/master/src/modules/studyCases/' +
             srcLink
           }
           target="_blank"

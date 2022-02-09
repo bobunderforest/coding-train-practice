@@ -49,7 +49,7 @@ export const Spring = () => (
   <PageDemo<DrawState>
     // next={links.dragResistance}
     hint="click for wind"
-    srcLink="Pendulum/Spring.tsx"
+    srcLink="05-Pendulum/Spring.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () => (drawState.isWind = true),
       onMouseUp: () => (drawState.isWind = false),

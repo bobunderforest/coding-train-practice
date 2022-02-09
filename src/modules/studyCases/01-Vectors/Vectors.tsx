@@ -13,7 +13,7 @@ export const Vectors = () => (
   <PageDemo<DrawState>
     hint="Move mouse around"
     next={links.forces}
-    srcLink="Vectors/Vectors.tsx"
+    srcLink="02-Vectors/Vectors.tsx"
     canvasProps={({ drawState }) => ({
       onMouseMove: e => (drawState.mouse = new Vector(e.pageX, e.pageY)),
       onMouseOut: e => (drawState.mouse = undefined),

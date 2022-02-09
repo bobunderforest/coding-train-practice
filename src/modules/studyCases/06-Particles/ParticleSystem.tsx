@@ -10,7 +10,7 @@ type DrawState = {
 export const ParticleSystemPage = () => (
   <PageDemo<DrawState>
     next={links.spring}
-    srcLink="Pendulum/Pendulum.tsx"
+    srcLink="06-Particles/ParticleSystem.tsx"
     setup={({ width, height }) => ({
       particles: new ParticleSystem(new Vector(width / 2, height / 4)),
     })}

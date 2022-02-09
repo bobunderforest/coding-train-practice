@@ -55,7 +55,7 @@ export const GravityAttraction = () => (
   <PageDemo<DrawState>
     hint="click to move attractor"
     next={links.mutalAttraction}
-    srcLink="Forces/GravityAttraction.tsx"
+    srcLink="02-Forces/GravityAttraction.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () => (drawState.isMoving = true),
       onMouseMove: e => (drawState.mouse = new Vector(e.pageX, e.pageY)),

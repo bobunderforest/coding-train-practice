@@ -67,7 +67,7 @@ type DrawState = {
 export const Pendulum = () => (
   <PageDemo<DrawState>
     next={links.spring}
-    srcLink="Pendulum/Pendulum.tsx"
+    srcLink="05-Pendulum/Pendulum.tsx"
     setup={({ width, height }) => ({
       pendulums: [
         new PendulumMover({

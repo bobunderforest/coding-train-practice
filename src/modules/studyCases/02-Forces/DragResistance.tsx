@@ -11,7 +11,7 @@ type DrawState = {
 export const DragResistance = () => (
   <PageDemo<DrawState>
     next={links.gravityAttraction}
-    srcLink="Forces/DragResistance.tsx"
+    srcLink="02-Forces/DragResistance.tsx"
     setup={({ width }) => ({
       guys: Array.from(Array(6)).map(
         () => new Mover(random(90, width - 90), 100),

@@ -13,7 +13,7 @@ type DrawState = {
 export const HarmonicMotion = () => (
   <PageDemo<DrawState>
     next={links.pendulum}
-    srcLink="HarmonicMotion/HarmonicMotion.tsx"
+    srcLink="04-HarmonicMotion/HarmonicMotion.tsx"
     setup={({ width, height }) => ({
       balls: [...Array(21)].map(
         (_, i, a) => new Vector(0, (i - a.length / 2) * 50),

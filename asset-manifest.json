@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/coding-train-practice/static/js/main.b83dc2aa.js",
+    "main.js": "/coding-train-practice/static/js/main.2ae2f907.js",
     "index.html": "/coding-train-practice/index.html",
     "static/media/restart.svg": "/coding-train-practice/static/media/restart.6c719a609a11ada249bc25eeb1491b7c.svg",
     "static/media/arrow.svg": "/coding-train-practice/static/media/arrow.608bbb5f6a31474f726d2526abc9cbd6.svg",
-    "main.b83dc2aa.js.map": "/coding-train-practice/static/js/main.b83dc2aa.js.map"
+    "main.2ae2f907.js.map": "/coding-train-practice/static/js/main.2ae2f907.js.map"
   },
   "entrypoints": [
-    "static/js/main.b83dc2aa.js"
+    "static/js/main.2ae2f907.js"
   ]
 }

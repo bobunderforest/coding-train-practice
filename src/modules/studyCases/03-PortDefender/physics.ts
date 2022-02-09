@@ -1,4 +1,4 @@
-import { Vector } from 'modules/math/physics/VectorMutable'
+import { Vector } from 'modules/math/vectors/VectorMutable'
 import { Mover } from 'modules/math/physics/MoverWithMass'
 import { sqr } from 'modules/math'
 import { drawShip } from './drawers'

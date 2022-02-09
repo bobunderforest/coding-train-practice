@@ -1,5 +1,5 @@
 import { PageDemo } from 'modules/pages/PageDemo'
-import { Vector } from 'modules/math/physics/VectorImmutable'
+import { Vector } from 'modules/math/vectors/VectorImmutable'
 import { Mover } from 'modules/math/physics/MoverNoMass'
 import { links } from 'modules/appCore/links'
 import { colors } from 'modules/styles/styles'

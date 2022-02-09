@@ -1,5 +1,5 @@
 import { random } from 'lodash'
-import { Vector } from 'modules/math/physics/VectorMutable'
+import { Vector } from 'modules/math/vectors/VectorMutable'
 import { NonAbstract } from 'types/NonAbstract'
 import { Particle } from './Particle'
 

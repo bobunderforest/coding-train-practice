@@ -1,5 +1,5 @@
 import { PageDemo } from 'modules/pages/PageDemo'
-import { Vector } from 'modules/math/physics/VectorMutable'
+import { Vector } from 'modules/math/vectors/VectorMutable'
 import { links } from 'modules/appCore/links'
 import { ParticleRound } from 'modules/math/particles/ParticleRound'
 import { ParticleSquare } from 'modules/math/particles/ParticleSquare'

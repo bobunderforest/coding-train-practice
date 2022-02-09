@@ -1,4 +1,4 @@
-import { Vector } from './VectorImmutable'
+import { Vector } from '../vectors/VectorImmutable'
 import { colors } from 'modules/styles/styles'
 
 /**

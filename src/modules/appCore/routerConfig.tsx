@@ -11,6 +11,7 @@ import { PortDefender } from 'modules/studyCases/03-PortDefender/PortDefender'
 import { HarmonicMotion } from 'modules/studyCases/04-HarmonicMotion/HarmonicMotion'
 import { Pendulum } from 'modules/studyCases/05-Pendulum/Pendulum'
 import { Spring } from 'modules/studyCases/05-Pendulum/Spring'
+import { ParticleSystemPage } from 'modules/studyCases/06-Particles/ParticleSystem'
 
 import { links } from './links'
 
@@ -59,6 +60,10 @@ export const routes: RouteObject[] = [
       {
         element: <Spring />,
         path: links.spring.link,
+      },
+      {
+        element: <ParticleSystemPage />,
+        path: links.particleSystem.link,
       },
     ],
   },

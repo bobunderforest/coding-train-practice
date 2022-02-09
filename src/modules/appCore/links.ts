@@ -39,4 +39,8 @@ export const links = {
     link: '/spring',
     text: 'Spring',
   },
+  particleSystem: {
+    link: '/particle-system',
+    text: 'Particle System',
+  },
 }

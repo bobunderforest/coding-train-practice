@@ -11,8 +11,8 @@ export abstract class Particle {
 
   constructor(pos: Vector) {
     this.pos = pos.copy()
-    this.acc = new Vector(0, 0.04)
-    this.vel = new Vector(random(-1, 1), random(-1, 1))
+    this.acc = new Vector(0, 0)
+    this.vel = new Vector(random(-1, 1), random(-1.5, 0))
     this.lifespan = Particle.particleLifetime
   }
 
@@ -23,7 +23,14 @@ export abstract class Particle {
   update() {
     this.vel.add(this.acc)
     this.pos.add(this.vel)
+    this.acc.mult(0)
     this.lifespan = Math.max(this.lifespan - 1, 0)
+  }
+
+  applyForce(f: Vector) {
+    // const divM = f.copy()
+    // divM.div(this.mass)
+    this.acc.add(f)
   }
 
   abstract render(ctx: CanvasRenderingContext2D): void

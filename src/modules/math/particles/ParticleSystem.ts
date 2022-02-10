@@ -22,6 +22,12 @@ export class ParticleSystem<
     this.particles.push(new ctor(this.pos))
   }
 
+  applyForce(f: Vector) {
+    for (const p of this.particles) {
+      p.applyForce(f)
+    }
+  }
+
   update() {
     this.emit()
     for (let i = this.particles.length - 1; i >= 0; i--) {

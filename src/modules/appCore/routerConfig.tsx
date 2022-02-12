@@ -12,6 +12,7 @@ import { HarmonicMotion } from 'modules/studyCases/04-HarmonicMotion/HarmonicMot
 import { Pendulum } from 'modules/studyCases/05-Pendulum/Pendulum'
 import { Spring } from 'modules/studyCases/05-Pendulum/Spring'
 import { ParticleSystemPage } from 'modules/studyCases/06-Particles/ParticleSystem'
+import { TexturedParticle } from 'modules/studyCases/06-Particles/TexturedParticle'
 
 import { links } from './links'
 
@@ -64,6 +65,10 @@ export const routes: RouteObject[] = [
       {
         element: <ParticleSystemPage />,
         path: links.particleSystem.link,
+      },
+      {
+        element: <TexturedParticle />,
+        path: links.texturedParticles.link,
       },
     ],
   },

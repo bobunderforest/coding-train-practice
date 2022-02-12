@@ -43,4 +43,8 @@ export const links = {
     link: '/particle-system',
     text: 'Particle System',
   },
+  texturedParticles: {
+    link: '/textured-particles',
+    text: 'Textured Particles',
+  },
 }

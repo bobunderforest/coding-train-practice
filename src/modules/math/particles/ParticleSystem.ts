@@ -1,7 +1,8 @@
 import { random } from 'lodash'
-import { Vector } from 'modules/math/vectors/VectorMutable'
-import { NonAbstract } from 'types/NonAbstract'
-import { Particle } from './Particle'
+import type { Vector } from 'modules/math/vectors/VectorMutable'
+import type { NonAbstract } from 'types/NonAbstract'
+import type { Particle } from './Particle'
+import type { Repeller } from './Repeller'
 
 export class ParticleSystem<
   PCtor extends NonAbstract<typeof Particle> = NonAbstract<typeof Particle>,
@@ -9,6 +10,7 @@ export class ParticleSystem<
   pCtors: PCtor[]
   pos: Vector
   particles: Particle[]
+  limit = Infinity
 
   constructor(pos: Vector, pCtors: PCtor[]) {
     this.pos = pos.copy()
@@ -28,8 +30,17 @@ export class ParticleSystem<
     }
   }
 
+  applyRepel(r: Repeller) {
+    for (const p of this.particles) {
+      const f = r.repel(p)
+      if (f) p.applyForce(f)
+    }
+  }
+
   update() {
-    this.emit()
+    if (this.particles.length < this.limit) {
+      this.emit()
+    }
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i]
       p.update()

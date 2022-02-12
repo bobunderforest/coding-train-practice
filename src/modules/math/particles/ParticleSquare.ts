@@ -7,7 +7,7 @@ export class ParticleSquare extends Particle {
     const { x, y } = this.pos
     ctx.rect(x - 3, y - 3, 6, 6)
     ctx.fillStyle = colors.focus
-    ctx.globalAlpha = this.lifespan / Particle.particleLifetime
+    ctx.globalAlpha = this.lifespan / this.totalLifetime
     ctx.fill()
   }
 }

@@ -2,18 +2,17 @@ import { Vector } from 'modules/math/vectors/VectorMutable'
 import { random } from 'modules/math'
 
 export abstract class Particle {
-  static particleLifetime = 120
-
   acc: Vector
-  pos: Vector
   vel: Vector
+  pos: Vector
   lifespan: number
+  totalLifetime = 160
 
   constructor(pos: Vector) {
     this.pos = pos.copy()
     this.acc = new Vector(0, 0)
     this.vel = new Vector(random(-1, 1), random(-1.5, 0))
-    this.lifespan = Particle.particleLifetime
+    this.lifespan = this.totalLifetime
   }
 
   isDead() {

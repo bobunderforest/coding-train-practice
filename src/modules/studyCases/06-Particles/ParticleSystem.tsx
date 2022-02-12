@@ -4,12 +4,14 @@ import { links } from 'modules/appCore/links'
 import { ParticleRound } from 'modules/math/particles/ParticleRound'
 import { ParticleSquare } from 'modules/math/particles/ParticleSquare'
 import { ParticleSystem } from 'modules/math/particles/ParticleSystem'
+import { Repeller } from 'modules/math/particles/Repeller'
 
 const GRAVITY_FORCE = new Vector(0, 0.04)
 const WIND_FORCE = new Vector(0.1, 0)
 
 type DrawState = {
   isWind: boolean
+  repeller: Repeller
   particlesRound: ParticleSystem
   particlesSquare: ParticleSystem
   particlesMouse: ParticleSystem
@@ -17,7 +19,7 @@ type DrawState = {
 
 export const ParticleSystemPage = () => (
   <PageDemo<DrawState>
-    next={links.spring}
+    next={links.texturedParticles}
     hint="click for wind"
     srcLink="06-Particles/ParticleSystem.tsx"
     canvasProps={({ drawState }) => ({
@@ -30,6 +32,7 @@ export const ParticleSystemPage = () => (
     })}
     setup={({ width, height }) => ({
       isWind: false,
+      repeller: new Repeller(new Vector(width / 3 + 60, height / 4 + 140)),
       particlesRound: new ParticleSystem(new Vector(width / 3, height / 4), [
         ParticleRound,
       ]),
@@ -49,9 +52,12 @@ export const ParticleSystemPage = () => (
         drawState.particlesMouse,
       ]
 
+      drawState.repeller.render(ctx)
+
       for (const system of systems) {
         system.applyForce(GRAVITY_FORCE)
         if (drawState.isWind) system.applyForce(WIND_FORCE)
+        system.applyRepel(drawState.repeller)
         system.update()
         system.render(ctx)
       }

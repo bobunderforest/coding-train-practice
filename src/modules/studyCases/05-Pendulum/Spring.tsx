@@ -1,7 +1,7 @@
 import { PageDemo } from 'modules/pages/PageDemo'
 import { Vector } from 'modules/math/vectors/VectorMutable'
 import { Mover } from 'modules/math/physics/MoverWithMass'
-// import { links } from 'utils/links'
+import { links } from 'modules/appCore/links'
 
 type SpringArgs = {
   anchor: Vector
@@ -47,7 +47,7 @@ type DrawState = {
 
 export const Spring = () => (
   <PageDemo<DrawState>
-    // next={links.dragResistance}
+    next={links.particleSystem}
     hint="click for wind"
     srcLink="05-Pendulum/Spring.tsx"
     canvasProps={({ drawState }) => ({

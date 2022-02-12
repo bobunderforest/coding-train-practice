@@ -6,7 +6,7 @@ export class ParticleRound extends Particle {
     ctx.beginPath()
     ctx.arc(this.pos.x, this.pos.y, 3, 0, 360)
     ctx.fillStyle = colors.danger
-    ctx.globalAlpha = this.lifespan / Particle.particleLifetime
+    ctx.globalAlpha = this.lifespan / this.totalLifetime
     ctx.fill()
   }
 }

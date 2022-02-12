@@ -7,7 +7,6 @@ import { links } from 'modules/appCore/links'
 
 type DrawState = {
   guys: Mover[]
-  mouse?: Vector
 }
 
 export const MutalAttraction = () => (
@@ -19,7 +18,6 @@ export const MutalAttraction = () => (
       onMouseDown: () =>
         drawState.mouse &&
         drawState.guys.push(new Mover(drawState.mouse.x, drawState.mouse.y)),
-      onMouseMove: e => (drawState.mouse = new Vector(e.pageX, e.pageY)),
     })}
     setup={({ width, height }) => {
       const guys = Array.from(Array(5)).map(() => {

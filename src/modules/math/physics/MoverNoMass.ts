@@ -1,4 +1,4 @@
-import { Vector } from '../vectors/VectorImmutable'
+import { Vector } from '../vectors/VectorMutable'
 import { colors } from 'modules/styles/styles'
 
 /**
@@ -17,8 +17,9 @@ export class Mover {
 
   update() {
     // Apply acc to velocity and velocity to position
-    this.vel = this.vel.add(this.acc)
-    this.pos = this.pos.add(this.vel)
+    this.vel.add(this.acc)
+    this.pos.add(this.vel)
+    this.acc = new Vector(0, 0)
   }
 
   bounce(x: number, y: number) {

@@ -56,11 +56,6 @@ export const GravityAttraction = () => (
     hint="click to move attractor"
     next={links.mutalAttraction}
     srcLink="02-Forces/GravityAttraction.tsx"
-    canvasProps={({ drawState }) => ({
-      onMouseDown: () => (drawState.isMoving = true),
-      onMouseMove: e => (drawState.mouse = new Vector(e.pageX, e.pageY)),
-      onMouseUp: () => (drawState.isMoving = false),
-    })}
     setup={({ width, height }) => {
       const guys = Array.from(Array(3)).map(() => {
         const border = height * 0.1
@@ -79,9 +74,12 @@ export const GravityAttraction = () => (
       }
     }}
     render={({ ctx, width, height, drawState }) => {
-      const { mouse, isMoving, attractor, guys } = drawState
+      const { mouse, isMousePressed, attractor, guys } = drawState
 
-      if (isMoving && mouse) attractor.pos = mouse
+      if (isMousePressed && mouse) {
+        attractor.pos.x = mouse.x
+        attractor.pos.y = mouse.y
+      }
 
       guys.forEach(guy => {
         gravityAttraction(attractor, guy)

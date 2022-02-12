@@ -12,21 +12,25 @@ export class Vector {
   add(b: Vector) {
     this.x += b.x
     this.y += b.y
+    return this
   }
 
   sub(b: Vector) {
     this.x -= b.x
     this.y -= b.y
+    return this
   }
 
   mult(val: number) {
     this.x *= val
     this.y *= val
+    return this
   }
 
   div(val: number) {
     this.x /= val
     this.y /= val
+    return this
   }
 
   copy() {
@@ -44,9 +48,11 @@ export class Vector {
   setMag(mag: number) {
     this.norm()
     this.mult(mag)
+    return this
   }
 
   limit(val: number) {
     if (this.mag() > val) this.setMag(val)
+    return this
   }
 }

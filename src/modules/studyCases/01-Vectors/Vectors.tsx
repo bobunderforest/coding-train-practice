@@ -1,12 +1,11 @@
 import { PageDemo } from 'modules/pages/PageDemo'
-import { Vector } from 'modules/math/vectors/VectorImmutable'
+import { Vector } from 'modules/math/vectors/VectorMutable'
 import { Mover } from 'modules/math/physics/MoverNoMass'
 import { links } from 'modules/appCore/links'
 import { colors } from 'modules/styles/styles'
 
 type DrawState = {
-  mouse?: Vector
-  bitch: Mover
+  mover: Mover
 }
 
 export const Vectors = () => (
@@ -14,35 +13,33 @@ export const Vectors = () => (
     hint="Move mouse around"
     next={links.forces}
     srcLink="02-Vectors/Vectors.tsx"
-    canvasProps={({ drawState }) => ({
-      onMouseMove: e => (drawState.mouse = new Vector(e.pageX, e.pageY)),
-      onMouseOut: e => (drawState.mouse = undefined),
-    })}
+    removeMouseOnOut
     setup={() => ({
-      bitch: new Mover(new Vector(100, 100)),
+      mover: new Mover(new Vector(100, 100)),
     })}
     render={({ ctx, width, height, drawState }) => {
-      const { bitch } = drawState
+      const { mover } = drawState
       const { mouse } = drawState
 
       if (mouse) {
         // Calc path between mouse and current position
-        const path = mouse.sub(bitch.pos)
+        const path = mouse.copy().sub(mover.pos)
 
         // Calc acceleration
-        bitch.acc = path.setMag(0.5)
+        const acc = path.copy().setMag(0.5)
+        mover.acc = acc
 
-        // Draw line between mouse and bitch
+        // Draw line between mouse and mover
         ctx.beginPath()
-        ctx.moveTo(bitch.pos.x, bitch.pos.y)
+        ctx.moveTo(mover.pos.x, mover.pos.y)
         ctx.lineTo(mouse.x, mouse.y)
         ctx.strokeStyle = '#ccc'
         ctx.stroke()
       }
 
-      bitch.update()
-      bitch.bounce(width, height)
-      bitch.render(ctx)
+      mover.update()
+      mover.bounce(width, height)
+      mover.render(ctx)
 
       // Draw mouse
       if (mouse) {

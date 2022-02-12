@@ -13,6 +13,7 @@ import { Pendulum } from 'modules/studyCases/05-Pendulum/Pendulum'
 import { Spring } from 'modules/studyCases/05-Pendulum/Spring'
 import { ParticleSystemPage } from 'modules/studyCases/06-Particles/ParticleSystem'
 import { TexturedParticle } from 'modules/studyCases/06-Particles/TexturedParticle'
+import { Box2DPage } from 'modules/studyCases/07-Box2D/Box2D'
 
 import { links } from './links'
 
@@ -69,6 +70,10 @@ export const routes: RouteObject[] = [
       {
         element: <TexturedParticle />,
         path: links.texturedParticles.link,
+      },
+      {
+        element: <Box2DPage />,
+        path: links.box2d.link,
       },
     ],
   },

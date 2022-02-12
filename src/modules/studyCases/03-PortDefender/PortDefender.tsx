@@ -21,7 +21,6 @@ type DrawState = {
   enemies: Enemy[]
   fire?: boolean
   missles: Missle[]
-  mouse: Vector
   nextSpawn?: number
   reloadStart?: number
 }
@@ -32,10 +31,6 @@ export const PortDefender = () => (
     srcLink="03-PortDefender/PortDefender.tsx"
     canvasProps={({ drawState }) => ({
       onMouseDown: () => (drawState.fire = true),
-      onMouseMove: e => {
-        drawState.mouse.x = e.pageX
-        drawState.mouse.y = e.pageY
-      },
       style: { cursor: 'crosshair' },
     })}
     setup={({ width, height }) => ({
@@ -59,7 +54,7 @@ export const PortDefender = () => (
 
       // Calc cannon properties
       const cannonPos = adjV(cannon.pos)
-      const cannonToMouse = mouse.copy()
+      const cannonToMouse = mouse ? mouse.copy() : new Vector(0, 0)
       cannonToMouse.sub(cannonPos)
       let angle = Math.atan(cannonToMouse.y / cannonToMouse.x)
 

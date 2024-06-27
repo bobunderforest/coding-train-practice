@@ -1,14 +1,17 @@
 import { Vector } from 'modules/math/vectors/VectorMutable'
 import { random } from 'modules/math'
+import type { CanvasUtil } from 'modules/canvas/canvas-util'
 
 export abstract class Particle {
+  canvasUtil: CanvasUtil
   acc: Vector
   vel: Vector
   pos: Vector
   lifespan: number
   totalLifetime = 160
 
-  constructor(pos: Vector) {
+  constructor(canvasUtil: CanvasUtil, pos: Vector) {
+    this.canvasUtil = canvasUtil
     this.pos = pos.copy()
     this.acc = new Vector(0, 0)
     this.vel = new Vector(random(-1, 1), random(-1.5, 0))
@@ -20,6 +23,7 @@ export abstract class Particle {
   }
 
   update() {
+    this.acc.mult(this.canvasUtil.fpsAdjust(1))
     this.vel.add(this.acc)
     this.pos.add(this.vel)
     this.acc.mult(0)

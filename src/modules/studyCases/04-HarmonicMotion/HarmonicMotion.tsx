@@ -14,19 +14,20 @@ export const HarmonicMotion = () => (
   <PageDemo<DrawState>
     next={links.pendulum}
     srcLink="04-HarmonicMotion/HarmonicMotion.tsx"
-    setup={({ width, height }) => ({
+    setup={() => ({
       balls: [...Array(21)].map(
         (_, i, a) => new Vector(0, (i - a.length / 2) * 50),
       ),
     })}
-    render={({ ctx, width, height, drawState, time }) => {
+    render={({ canvasUtil, drawState }) => {
       const { balls } = drawState
+      const { ctx, width, height, nowTime } = canvasUtil
 
       ctx.save()
       ctx.translate(width / 2, height / 2)
       balls.forEach((ball, i) => {
         const x =
-          AMPLITUDE * Math.sin((time / PERIOD) * (2 * Math.PI) + i * 100)
+          AMPLITUDE * Math.sin((nowTime / PERIOD) * (2 * Math.PI) + i * 100)
 
         ctx.beginPath()
 

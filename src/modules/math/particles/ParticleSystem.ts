@@ -3,16 +3,19 @@ import type { Vector } from 'modules/math/vectors/VectorMutable'
 import type { NonAbstract } from 'types/NonAbstract'
 import type { Particle } from './Particle'
 import type { Repeller } from './Repeller'
+import type { CanvasUtil } from 'modules/canvas/canvas-util'
 
 export class ParticleSystem<
   PCtor extends NonAbstract<typeof Particle> = NonAbstract<typeof Particle>,
 > {
+  canvasUtil: CanvasUtil
   pCtors: PCtor[]
   pos: Vector
   particles: Particle[]
   limit = Infinity
 
-  constructor(pos: Vector, pCtors: PCtor[]) {
+  constructor(canvasUtil: CanvasUtil, pos: Vector, pCtors: PCtor[]) {
+    this.canvasUtil = canvasUtil
     this.pos = pos.copy()
     this.particles = []
     this.pCtors = pCtors
@@ -21,7 +24,7 @@ export class ParticleSystem<
   emit() {
     const idx = random(0, this.pCtors.length - 1)
     const ctor = this.pCtors[idx]
-    this.particles.push(new ctor(this.pos))
+    this.particles.push(new ctor(this.canvasUtil, this.pos))
   }
 
   applyForce(f: Vector) {

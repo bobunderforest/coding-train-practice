@@ -14,15 +14,18 @@ export const MutalAttraction = () => (
     hint="click to create"
     next={links.portDefender}
     srcLink="02-Forces/MutalAttraction.tsx"
-    canvasProps={({ drawState }) => ({
+    canvasProps={({ canvasUtil, drawState }) => ({
       onMouseDown: () =>
         drawState.mouse &&
-        drawState.guys.push(new Mover(drawState.mouse.x, drawState.mouse.y)),
+        drawState.guys.push(
+          new Mover(canvasUtil, drawState.mouse.x, drawState.mouse.y),
+        ),
     })}
-    setup={({ width, height }) => {
+    setup={({ canvasUtil }) => {
+      const { width, height } = canvasUtil
       const guys = Array.from(Array(5)).map(() => {
         const initForce = new Vector(random(-1, 1), random(-1, 1))
-        const guy = new Mover(random(0, width), random(0, height))
+        const guy = new Mover(canvasUtil, random(0, width), random(0, height))
         guy.applyForce(initForce)
         return guy
       })
@@ -30,7 +33,8 @@ export const MutalAttraction = () => (
         guys,
       }
     }}
-    render={({ ctx, width, height, drawState }) => {
+    render={({ canvasUtil, drawState }) => {
+      const { ctx, width, height } = canvasUtil
       const { guys } = drawState
       guys.forEach(guy => {
         guys.forEach(guy2 => gravityAttraction(guy, guy2))

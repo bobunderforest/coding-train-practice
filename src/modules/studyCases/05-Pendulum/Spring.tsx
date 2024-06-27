@@ -54,14 +54,19 @@ export const Spring = () => (
       onMouseDown: () => (drawState.isWind = true),
       onMouseUp: () => (drawState.isWind = false),
     })}
-    setup={({ width, height }) => ({
-      bob: new Mover(width * 0.5, height * 0.7),
-      spring: new SpringMover({
-        anchor: new Vector(width * 0.5, 0),
-        restLen: height * 0.5,
-      }),
-    })}
-    render={({ ctx, width, height, drawState, time }) => {
+    setup={({ canvasUtil }) => {
+      const { width, height } = canvasUtil
+      return {
+        bob: new Mover(canvasUtil, width * 0.5, height * 0.7),
+        spring: new SpringMover({
+          anchor: new Vector(width * 0.5, 0),
+          restLen: height * 0.5,
+        }),
+      }
+    }}
+    render={({ canvasUtil, drawState }) => {
+      const { ctx } = canvasUtil
+
       drawState.bob.gravity()
       if (drawState.isWind) drawState.bob.applyForce(windForce)
 

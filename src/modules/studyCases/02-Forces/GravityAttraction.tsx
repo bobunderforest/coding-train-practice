@@ -4,12 +4,15 @@ import { Mover } from 'modules/math/physics/MoverWithMass'
 import { random, sqr } from 'modules/math'
 import { links } from 'modules/appCore/links'
 import { colors } from 'modules/styles/styles'
+import { CanvasUtil } from 'modules/canvas/canvas-util'
 
 class Attractor {
+  canvasUtil: CanvasUtil
   pos: Vector
   mass: number = 3
 
-  constructor(x: number, y: number) {
+  constructor(canvasUtil: CanvasUtil, x: number, y: number) {
+    this.canvasUtil = canvasUtil
     this.pos = new Vector(x, y)
   }
 
@@ -56,24 +59,26 @@ export const GravityAttraction = () => (
     hint="click to move attractor"
     next={links.mutalAttraction}
     srcLink="02-Forces/GravityAttraction.tsx"
-    setup={({ width, height }) => {
+    setup={({ canvasUtil }) => {
+      const { width, height } = canvasUtil
       const guys = Array.from(Array(3)).map(() => {
         const border = height * 0.1
         const avRange = (height - border * 2) / 2
         const range = random(border, avRange)
 
-        const guy = new Mover(width / 2, range)
+        const guy = new Mover(canvasUtil, width / 2, range)
         const initForce = (avRange - range) / ((1 / guy.mass) * 20)
         guy.applyForce(new Vector(initForce, 0))
 
         return guy
       })
       return {
-        attractor: new Attractor(width / 2, height / 2),
+        attractor: new Attractor(canvasUtil, width / 2, height / 2),
         guys,
       }
     }}
-    render={({ ctx, width, height, drawState }) => {
+    render={({ canvasUtil, drawState }) => {
+      const { ctx } = canvasUtil
       const { mouse, isMousePressed, attractor, guys } = drawState
 
       if (isMousePressed && mouse) {

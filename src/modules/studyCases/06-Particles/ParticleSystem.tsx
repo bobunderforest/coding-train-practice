@@ -30,22 +30,31 @@ export const ParticleSystemPage = () => (
       onMouseDown: () => (drawState.isWind = true),
       onMouseUp: () => (drawState.isWind = false),
     })}
-    setup={({ width, height }) => ({
-      isWind: false,
-      repeller: new Repeller(new Vector(width / 3 + 60, height / 4 + 140)),
-      particlesRound: new ParticleSystem(new Vector(width / 3, height / 4), [
-        ParticleRound,
-      ]),
-      particlesSquare: new ParticleSystem(
-        new Vector((width / 3) * 2, height / 4),
-        [ParticleSquare],
-      ),
-      particlesMouse: new ParticleSystem(new Vector(width / 2, height / 4), [
-        ParticleSquare,
-        ParticleRound,
-      ]),
-    })}
-    render={({ ctx, width, height, drawState, time }) => {
+    setup={({ canvasUtil }) => {
+      const { width, height } = canvasUtil
+      return {
+        isWind: false,
+        repeller: new Repeller(new Vector(width / 3 + 60, height / 4 + 140)),
+        particlesRound: new ParticleSystem(
+          canvasUtil,
+          new Vector(width / 3, height / 4),
+          [ParticleRound],
+        ),
+        particlesSquare: new ParticleSystem(
+          canvasUtil,
+          new Vector((width / 3) * 2, height / 4),
+          [ParticleSquare],
+        ),
+        particlesMouse: new ParticleSystem(
+          canvasUtil,
+          new Vector(width / 2, height / 4),
+          [ParticleSquare, ParticleRound],
+        ),
+      }
+    }}
+    render={({ canvasUtil, drawState }) => {
+      const { ctx } = canvasUtil
+
       const systems = [
         drawState.particlesRound,
         drawState.particlesSquare,

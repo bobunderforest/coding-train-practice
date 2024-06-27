@@ -12,13 +12,19 @@ export const TexturedParticle = () => (
   <PageDemo<DrawState>
     next={links.box2d}
     srcLink="06-Particles/TexturedParticle.tsx"
-    setup={({ width, height }) => ({
-      mouse: new Vector(0, 0),
-      particles: new ParticleSystem(new Vector(width / 2, (height / 6) * 5), [
-        ParticleTextured,
-      ]),
-    })}
-    render={({ ctx, width, height, drawState, time }) => {
+    setup={({ canvasUtil }) => {
+      const { width, height } = canvasUtil
+      return {
+        mouse: new Vector(0, 0),
+        particles: new ParticleSystem(
+          canvasUtil,
+          new Vector(width / 2, (height / 6) * 5),
+          [ParticleTextured],
+        ),
+      }
+    }}
+    render={({ canvasUtil, drawState }) => {
+      const { ctx } = canvasUtil
       const { mouse } = drawState
       if (mouse) {
         const mouseForce = mouse

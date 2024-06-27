@@ -1,17 +1,20 @@
 import { Vector } from 'modules/math/vectors/VectorMutable'
 import { colors } from 'modules/styles/styles'
 import { random } from 'modules/math'
+import { CanvasUtil } from 'modules/canvas/canvas-util'
 
 // Force is a `vector` that cause object with mass to `accelerate`
 const gravityConst = new Vector(0, 0.98)
 
 export class Mover {
+  canvasUtil: CanvasUtil
   acc: Vector
   pos: Vector
   vel: Vector
   mass: number
 
-  constructor(x: number, y: number) {
+  constructor(canvasUtil: CanvasUtil, x: number, y: number) {
+    this.canvasUtil = canvasUtil
     this.pos = new Vector(x, y)
     this.acc = new Vector(0, 0)
     this.vel = new Vector(0, 0)
@@ -37,6 +40,8 @@ export class Mover {
   }
 
   update() {
+    // Adjust force with render performance
+    this.acc.mult(this.canvasUtil.fpsAdjust(1))
     // Apply acc to velocity and velocity to position
     this.vel.add(this.acc)
     this.pos.add(this.vel)

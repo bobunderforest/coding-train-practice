@@ -2,6 +2,7 @@ import { Vector } from 'modules/math/vectors/VectorMutable'
 import { Mover } from 'modules/math/physics/MoverWithMass'
 import { sqr } from 'modules/math'
 import { drawShip } from './drawers'
+import type { CanvasUtil } from 'modules/canvas/canvas-util'
 
 export const waterResist = (vel: Vector) => {
   const coeff = -0.005
@@ -12,8 +13,8 @@ export const waterResist = (vel: Vector) => {
 }
 
 export class Missle extends Mover {
-  constructor(pos: Vector) {
-    super(pos.x, pos.y)
+  constructor(canvasUtil: CanvasUtil, pos: Vector) {
+    super(canvasUtil, pos.x, pos.y)
     this.mass = 10
   }
 
@@ -34,8 +35,8 @@ export class Enemy extends Mover {
   angVel: number = 0
   angAcc: number = 0
 
-  constructor(x: number, y: number) {
-    super(x, y)
+  constructor(canvasUtil: CanvasUtil, x: number, y: number) {
+    super(canvasUtil, x, y)
     this.mass = 30
   }
 

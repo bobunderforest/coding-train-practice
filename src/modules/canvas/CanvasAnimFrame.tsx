@@ -1,75 +1,59 @@
-import { useEffect, useRef } from 'react'
-
-const SCALE_RATIO =
-  typeof window.devicePixelRatio === 'number' ? window.devicePixelRatio : 1
+import useResizeObserver from 'use-resize-observer'
+import { useEffect, useRef, useState } from 'react'
+import { CanvasUtil } from './canvas-util'
 
 export type RenderArgs = {
-  ctx: CanvasRenderingContext2D
-  height: number
-  prevTime: number
-  time: number
-  width: number
+  canvasUtil: CanvasUtil
 }
 
 export type Props = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
+  setup?: (args: RenderArgs) => void
   render: (args: RenderArgs) => void
-  width: number
-  height: number
 }
 
 export function CanvasAnimFrame({
+  setup,
   render,
-  width,
-  height,
+  className,
   ...restProps
 }: Props) {
+  const { ref, width = -1, height = -1 } = useResizeObserver<HTMLDivElement>()
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const canvasUtilRef = useRef<CanvasUtil>()
 
   useEffect(() => {
-    if (!canvasRef.current) return
+    if (!canvasRef.current || width === -1 || height === -1) return
+    const canvasUtil = new CanvasUtil({
+      canvas: canvasRef.current,
+    })
 
-    let rafID: number
-    let prevTime: number = 0
-    const ctx = canvasRef.current.getContext('2d') as CanvasRenderingContext2D
-    ctx.imageSmoothingEnabled = true
+    canvasUtilRef.current = canvasUtil
+    const unsubInit = setup && canvasUtil.eventInit.on(setup)
+    const unsubRender = canvasUtil.eventRender.on(render)
 
-    const renderFrame = (time: number) => {
-      if (canvasRef.current && width && height) {
-        ctx.save()
-        if (SCALE_RATIO !== 1) ctx.scale(SCALE_RATIO, SCALE_RATIO)
-        ctx.clearRect(0, 0, width, height)
-        render({
-          ctx,
-          height,
-          prevTime,
-          time: time,
-          width,
-        })
-        ctx.restore()
-        prevTime = time
-      }
-      rafID = window.requestAnimationFrame(renderFrame)
-    }
-
-    rafID = window.requestAnimationFrame(renderFrame)
+    canvasUtil.initialize({ width, height })
+    canvasUtil.enable()
 
     return () => {
-      cancelAnimationFrame(rafID)
+      canvasUtil.disable()
+      unsubInit?.()
+      unsubRender()
     }
-  }, [render, width, height])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width, height])
 
   return (
-    <canvas
-      height={height * SCALE_RATIO || ''}
-      width={width * SCALE_RATIO || ''}
-      ref={canvasRef}
-      {...restProps}
-      style={{
-        display: 'block',
-        height: height || '100%',
-        width: width || '100%',
-        ...(restProps.style ? restProps.style : {}),
-      }}
-    />
+    <div className={className} ref={ref}>
+      <canvas
+        ref={canvasRef}
+        {...restProps}
+        style={{
+          display: 'block',
+          height: '100%',
+          width: '100%',
+          ...(restProps.style ? restProps.style : {}),
+        }}
+      />
+    </div>
   )
 }

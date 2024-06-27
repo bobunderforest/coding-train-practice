@@ -33,7 +33,7 @@ export const PortDefender = () => (
       onMouseDown: () => (drawState.fire = true),
       style: { cursor: 'crosshair' },
     })}
-    setup={({ width, height }) => ({
+    setup={({ canvasUtil: { width, height } }) => ({
       cannon: {
         h: 30,
         pos: new Vector(GROUND_WIDTH / 2, GROUND_HEIGHT + 30),
@@ -43,7 +43,8 @@ export const PortDefender = () => (
       missles: [],
       mouse: new Vector(width / 2, height / 2),
     })}
-    render={({ ctx, width, height, drawState, time }) => {
+    render={({ drawState, canvasUtil }) => {
+      const { ctx, width, height, nowTime } = canvasUtil
       const { mouse, cannon, fire, missles, reloadStart, enemies } = drawState
 
       const adjY = (x: number) => height - x
@@ -71,11 +72,11 @@ export const PortDefender = () => (
 
       // Fire
       if (fire) {
-        if (!reloadStart || time >= reloadStart + RELOAD_TIME) {
-          const newMissle = new Missle(cannonPos)
+        if (!reloadStart || nowTime >= reloadStart + RELOAD_TIME) {
+          const newMissle = new Missle(canvasUtil, cannonPos)
           newMissle.applyForce(cannonToMouse)
           drawState.missles.push(newMissle)
-          drawState.reloadStart = time
+          drawState.reloadStart = nowTime
         }
         drawState.fire = false
       }
@@ -92,14 +93,14 @@ export const PortDefender = () => (
       misslesToRemove.forEach(i => missles.splice(i, 1))
 
       // Spawn new enemy
-      if (drawState.nextSpawn && drawState.nextSpawn <= time) {
-        const newEnemy = new Enemy(width, waterH)
+      if (drawState.nextSpawn && drawState.nextSpawn <= nowTime) {
+        const newEnemy = new Enemy(canvasUtil, width, waterH)
         newEnemy.applyForce(new Vector(-100, 0))
         drawState.enemies.push(newEnemy)
         drawState.nextSpawn = undefined
       }
       if (!drawState.nextSpawn) {
-        drawState.nextSpawn = time + random(1000, 4000)
+        drawState.nextSpawn = nowTime + random(1000, 4000)
       }
 
       // Process existing enemy

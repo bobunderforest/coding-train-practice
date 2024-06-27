@@ -14,10 +14,11 @@ export const Vectors = () => (
     next={links.forces}
     srcLink="02-Vectors/Vectors.tsx"
     removeMouseOnOut
-    setup={() => ({
-      mover: new Mover(new Vector(100, 100)),
+    setup={({ canvasUtil }) => ({
+      mover: new Mover(canvasUtil, new Vector(100, 100)),
     })}
-    render={({ ctx, width, height, drawState }) => {
+    render={({ canvasUtil, drawState }) => {
+      const { ctx, width, height } = canvasUtil
       const { mover } = drawState
       const { mouse } = drawState
 

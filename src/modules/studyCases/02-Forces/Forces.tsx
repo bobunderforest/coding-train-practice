@@ -20,12 +20,20 @@ export const Forces = () => (
       onMouseDown: () => (drawState.isWind = true),
       onMouseUp: () => (drawState.isWind = false),
     })}
-    setup={({ width, height }) => ({
-      guys: Array.from(Array(6)).map(
-        () => new Mover(random(90, width - 90), height / 2),
-      ),
-    })}
-    render={({ ctx, width, height, drawState }) => {
+    setup={({ canvasUtil }) => {
+      return {
+        guys: Array.from(Array(6)).map(
+          () =>
+            new Mover(
+              canvasUtil,
+              random(90, canvasUtil.width - 90),
+              canvasUtil.height / 2,
+            ),
+        ),
+      }
+    }}
+    render={({ canvasUtil, drawState }) => {
+      const { ctx, width, height } = canvasUtil
       drawState.guys.forEach(guy => {
         // Wind
         if (drawState.isWind) guy.applyForce(windForce)

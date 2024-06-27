@@ -12,12 +12,14 @@ export const DragResistance = () => (
   <PageDemo<DrawState>
     next={links.gravityAttraction}
     srcLink="02-Forces/DragResistance.tsx"
-    setup={({ width }) => ({
+    setup={({ canvasUtil }) => ({
       guys: Array.from(Array(6)).map(
-        () => new Mover(random(90, width - 90), 100),
+        () => new Mover(canvasUtil, random(90, canvasUtil.width - 90), 100),
       ),
     })}
-    render={({ ctx, width, height, drawState }) => {
+    render={({ canvasUtil, drawState }) => {
+      const { ctx, width, height } = canvasUtil
+
       // Friction force
       // const coeff = -0.1
       // const friction = guy.vel.copy()

@@ -2,6 +2,7 @@ import { BASE_URL } from 'config'
 import { random } from 'lodash'
 import { Vector } from '../vectors/VectorMutable'
 import { Particle } from './Particle'
+import { CanvasUtil } from 'modules/canvas/canvas-util'
 
 class Texture {
   w = 0
@@ -35,8 +36,8 @@ export class ParticleTextured extends Particle {
   texture: Texture
   totalLifetime = 60
 
-  constructor(pos: Vector) {
-    super(pos)
+  constructor(canvasUtil: CanvasUtil, pos: Vector) {
+    super(canvasUtil, pos)
     this.texture = textures[random(0, textures.length - 1)]
     this.lifespan = this.totalLifetime
   }

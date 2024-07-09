@@ -35,7 +35,8 @@ export const PageHome = () => (
   <Wrap>
     <h2>Hello!</h2>
     <p>
-      Here I'm practicing in some math and physics programming while watching{' '}
+      Here I&apos;m practicing in some math and physics programming while
+      watching{' '}
       <a
         target="_blank"
         href="https://www.youtube.com/user/shiffman/videos"

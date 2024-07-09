@@ -4,8 +4,8 @@ import { colors, dur } from 'modules/styles/styles'
 
 import { links } from 'modules/appCore/links'
 
-import { ReactComponent as Arrow } from 'assets/arrow.svg'
-import { ReactComponent as Restart } from 'assets/restart.svg'
+import Arrow from 'assets/arrow.svg?react'
+import Restart from 'assets/restart.svg?react'
 
 const plankStyle = css`
   position: fixed;

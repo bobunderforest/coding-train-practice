@@ -23,7 +23,7 @@ type Props<SP, S = StateWithDefaults<SP>> = ControlsProps & {
   removeMouseOnOut?: boolean
 }
 
-export function PageDemo<SP extends {} = {}>({
+export function PageDemo<SP extends object = object>({
   canvasProps: canvasPropsProp = () => ({}),
   render: renderProp,
   setup: setupProp,

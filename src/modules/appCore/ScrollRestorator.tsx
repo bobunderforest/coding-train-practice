@@ -7,6 +7,7 @@ import {
 } from 'modules/appCore/scrollUtils'
 
 type Props = {
+  // eslint-disable-next-line react/no-unused-prop-types
   action: string
   location: Location
 }
@@ -45,3 +46,4 @@ export const ScrollRestorator = memo(() => {
   const action = useNavigationType()
   return <ScrollRestoratorComparator action={action} location={location} />
 })
+ScrollRestorator.displayName = 'ScrollRestorator'

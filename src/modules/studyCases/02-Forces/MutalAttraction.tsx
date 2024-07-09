@@ -1,6 +1,6 @@
 import { PageDemo } from 'modules/pages/PageDemo'
 import { Vector } from 'modules/math/vectors/VectorMutable'
-import { gravityAttraction } from './GravityAttraction'
+import { gravityAttraction } from './gravityAttractionFn'
 import { Mover } from 'modules/math/physics/MoverWithMass'
 import { random } from 'modules/math'
 import { links } from 'modules/appCore/links'

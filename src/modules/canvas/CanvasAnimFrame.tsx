@@ -1,5 +1,5 @@
 import useResizeObserver from 'use-resize-observer'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { CanvasUtil } from './canvas-util'
 
 export type RenderArgs = {

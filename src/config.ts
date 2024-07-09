@@ -1,1 +1,1 @@
-export const BASE_URL = process.env.PUBLIC_URL
+export const BASE_URL = import.meta.env.BASE_URL

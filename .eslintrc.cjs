@@ -11,19 +11,7 @@ const esRules = {
   'default-case': 'error',
   'no-fallthrough': 'error',
   'prettier/prettier': ['error', { usePrettierrc: true }],
-  'css-modules/no-undef-class': 'warn',
-}
-
-// React
-const reactRules = {
-  'react/no-children-prop': 'off',
-  'react/self-closing-comp': 'error',
-  'react/no-unused-prop-types': 'warn',
-  'react-hooks/rules-of-hooks': 'error',
-  'react-hooks/exhaustive-deps': [
-    'error',
-    // { additionalHooks: '(useLifecycledEffect|useMyOtherCustomHook)' },
-  ],
+  // 'css-modules/no-undef-class': 'warn',
 }
 
 // Typescript
@@ -54,21 +42,28 @@ const tsRules = {
   '@typescript-eslint/require-await': 'error',
 }
 
+// React
+const reactRules = {
+  'react/jsx-no-undef': 'off',
+  'react/react-in-jsx-scope': 'off',
+  'react/no-children-prop': 'off',
+  'react/self-closing-comp': 'error',
+  'react/no-unused-prop-types': 'warn',
+  'react-hooks/rules-of-hooks': 'error',
+  'react-hooks/exhaustive-deps': [
+    'error',
+    // { additionalHooks: '(useLifecycledEffect|useMyOtherCustomHook)' },
+  ],
+}
+
 // Import
 const importRules = {
-  // 'import/no-unresolved': ['error', { ignore: ['.svg'] }],
+  'import/no-unresolved': ['error', { ignore: ['.svg'] }],
   'import/no-dynamic-require': 'error',
   'import/no-self-import': 'error',
   'import/no-useless-path-segments': ['error', { noUselessIndex: true }],
   'import/no-duplicates': 'error',
-  'import/extensions': [
-    'error',
-    'never',
-    {
-      ignorePackages: true,
-      svg: 'always',
-    },
-  ],
+  'import/extensions': ['off'],
   'import/export': 'error',
   'import/newline-after-import': 'error',
   'import/first': 'error',
@@ -77,62 +72,43 @@ const importRules = {
   'import/order': 'off',
 }
 
-const env = { browser: true, node: true }
-
-const settings = {
-  react: { version: 'detect' },
-  'import/resolver': {
-    node: {
-      paths: ['src/'],
+module.exports = {
+  root: true,
+  env: { browser: true, es2020: true },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+  ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: { jsx: true },
+    ecmaVersion: '2020',
+    sourceType: 'module',
+    project: './tsconfig.app.json',
+  },
+  plugins: ['react', 'react-hooks', 'react-refresh', 'prettier', 'import'],
+  settings: {
+    react: { version: 'detect' },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: './tsconfig.app.json',
+      },
     },
   },
-}
-
-module.exports = {
-  overrides: [
-    {
-      env,
-      files: ['**/*.js', '**/*.jsx', '**/*.json'],
-      extends: ['react-app', 'prettier'],
-      plugins: ['prettier', 'react', 'react-hooks', 'import'],
-      settings,
-      rules: {
-        ...esRules,
-        ...reactRules,
-        ...importRules,
-      },
-    },
-    {
-      env,
-      files: ['**/*.d.ts', '**/*.ts', '**/*.tsx'],
-      extends: [
-        'react-app',
-        'plugin:import/typescript',
-        'plugin:css-modules/recommended',
-        'prettier',
-      ],
-      plugins: [
-        'css-modules',
-        'prettier',
-        '@typescript-eslint',
-        'react',
-        'react-hooks',
-        'import',
-      ],
-      settings,
-      rules: {
-        ...esRules,
-        ...tsRules,
-        ...reactRules,
-        ...importRules,
-      },
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-        ecmaVersion: 2020,
-        sourceType: 'module',
-        project: './tsconfig.json',
-      },
-    },
-  ],
+  rules: {
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    ...esRules,
+    ...tsRules,
+    ...reactRules,
+    ...importRules,
+  },
 }

@@ -15,8 +15,8 @@ export class CanvasUtil {
   heightRated: number = 0
 
   isActive: boolean = true
-  nowTime: number = Date.now()
-  prevTime: number = Date.now()
+  nowTime: number = 0
+  prevTime: number = 0
   deltaTime: number = 0
 
   eventInit: EventEmitter<{ canvasUtil: CanvasUtil }>
@@ -48,6 +48,15 @@ export class CanvasUtil {
     this.canvas.style.height = this.height + 'px'
 
     this.eventInit.fire({ canvasUtil: this })
+
+    document.addEventListener('visibilitychange', () => {
+      const isPaused = document.visibilityState !== 'visible'
+      if (isPaused) {
+        this.disable()
+      } else {
+        this.enable()
+      }
+    })
   }
 
   fpsAdjust = (num: number) => {
@@ -58,23 +67,20 @@ export class CanvasUtil {
   executeFrame = () => {
     if (!this.isActive) return
 
-    const { ctx, pixelRatio, width, height } = this
-
-    ctx.save()
-    if (pixelRatio !== 1) ctx.scale(pixelRatio, pixelRatio)
-    ctx.clearRect(0, 0, width, height)
+    this.rafID = requestAnimationFrame(this.executeFrame)
 
     this.prevTime = this.nowTime
     this.nowTime = Date.now()
     this.deltaTime = this.nowTime - this.prevTime
 
-    if (this.deltaTime !== 0) {
-      this.eventRender.fire({ canvasUtil: this })
-    }
+    if (this.prevTime === 0 || this.deltaTime === 0) return
 
+    const { ctx, pixelRatio, width, height } = this
+    ctx.save()
+    if (pixelRatio !== 1) ctx.scale(pixelRatio, pixelRatio)
+    ctx.clearRect(0, 0, width, height)
+    this.eventRender.fire({ canvasUtil: this })
     ctx.restore()
-
-    this.rafID = requestAnimationFrame(this.executeFrame)
   }
 
   enable = () => {
@@ -84,6 +90,9 @@ export class CanvasUtil {
 
   disable = () => {
     this.isActive = false
+    this.prevTime = 0
+    this.nowTime = 0
+    this.deltaTime = 0
     if (this.rafID !== null) {
       cancelAnimationFrame(this.rafID)
       this.rafID = null

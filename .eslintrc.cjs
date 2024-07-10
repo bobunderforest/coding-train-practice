@@ -36,7 +36,7 @@ const tsRules = {
   '@typescript-eslint/no-unnecessary-condition': 'error',
   '@typescript-eslint/no-unnecessary-qualifier': 'error',
   '@typescript-eslint/no-unnecessary-type-arguments': 'error',
-  '@typescript-eslint/no-unused-vars': 'warn',
+  // '@typescript-eslint/no-unused-vars': 'warn',
   '@typescript-eslint/no-useless-constructor': 'error',
   '@typescript-eslint/prefer-includes': 'error',
   '@typescript-eslint/require-await': 'error',

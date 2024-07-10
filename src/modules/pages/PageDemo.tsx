@@ -6,12 +6,14 @@ import type { CanvasUtil } from 'modules/canvas/canvas-util'
 
 type ControlsProps = ComponentProps<typeof DemoLayoutControls>
 
-type StateWithDefaults<S> = S & {
+export type StateWithDefaults<S> = S & {
   mouse?: Vector
   isMousePressed: boolean
 }
 
-type CanvasComponentProps = Partial<ComponentProps<typeof CanvasAnimFrame>>
+export type CanvasComponentProps = Partial<
+  ComponentProps<typeof CanvasAnimFrame>
+>
 
 type Props<SP, S = StateWithDefaults<SP>> = ControlsProps & {
   canvasProps?: (args: {

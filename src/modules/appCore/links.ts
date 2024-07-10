@@ -47,8 +47,9 @@ export const links = {
     link: '/textured-particles',
     text: 'Textured Particles',
   },
-  box2d: {
-    link: '/box2d',
-    text: 'Box 2D',
+  box2dBasic: {
+    link: '/box2d-basic',
+    text: 'Box 2D — Basic',
+  },
   },
 }

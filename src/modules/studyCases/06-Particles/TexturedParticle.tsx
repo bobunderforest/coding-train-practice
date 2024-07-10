@@ -10,7 +10,7 @@ type DrawState = {
 
 export const TexturedParticle = () => (
   <PageDemo<DrawState>
-    next={links.box2d}
+    next={links.box2dBasic}
     srcLink="06-Particles/TexturedParticle.tsx"
     setup={({ canvasUtil }) => {
       const { width, height } = canvasUtil

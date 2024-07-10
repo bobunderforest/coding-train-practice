@@ -219,6 +219,11 @@
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
 
+"@box2d/core@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@box2d/core/-/core-0.10.0.tgz#99c8893970b33f68ab22a426ca8d23166b9d7de5"
+  integrity sha512-rVawB+VokPnE2IarLPXE9blbpV26KOEYdadsnXf7ToyXzceXMADPrSIvYIyTzXLteiLE9i+UTMmTcCvYXl+QEA==
+
 "@emotion/is-prop-valid@1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-1.2.2.tgz#d4175076679c6a26faa92b03bb786f9e52612337"

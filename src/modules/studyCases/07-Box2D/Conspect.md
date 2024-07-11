@@ -1,6 +1,6 @@
 # Box2d
 
-> Youtube Playlist: [Physics Libraries - The Nature of Code](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6akvoNKE4GAxf6ZeBYoJ4uh); Videos 3 – 14
+> Youtube Playlist: [Physics Libraries - The Nature of Code](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6akvoNKE4GAxf6ZeBYoJ4uh); Videos 3 – 13
 
 Box2d is a physical engine that operates with such entities:
 - World
@@ -24,3 +24,7 @@ Box2d operates it's own coordinate system so we need to convert object coordinat
 3. Create a shape. `PolygonShape`, `CircleShape`, `ChainShape`, etc.
 4. Create a fixture to attach the shape to the body. Params: `density`, `friction` and `restitution`.
 5. Put it all together.
+
+#### Complex objects
+
+Complex objects can be created by custom polygon or by attaching multiple shapes to one body.

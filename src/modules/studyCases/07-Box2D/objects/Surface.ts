@@ -1,5 +1,5 @@
 import * as b2 from '@box2d/core'
-import { Box2DUtil } from './Box2DUtil'
+import { Box2DUtil } from '../box2d-utils/Box2DUtil'
 import { random } from 'modules/math'
 
 export class Surface {
@@ -14,6 +14,7 @@ export class Surface {
     const altitude = -150
     const verticiesCount = 120
     const amplitude = 30
+    const depth = 600
 
     // Colors
     this.fillColor = `rgb(${random(200, 255)}, ${random(200, 255)}, ${random(200, 255)})`
@@ -30,10 +31,10 @@ export class Surface {
       )
     })
     this.verticies = [
-      new b2.b2Vec2(start, altitude - 200),
+      new b2.b2Vec2(start, altitude - depth),
       ...this.verticies,
-      new b2.b2Vec2(end, altitude - 200),
-      new b2.b2Vec2(start, altitude - 200),
+      new b2.b2Vec2(end, altitude - depth),
+      new b2.b2Vec2(start, altitude - depth),
     ].reverse()
 
     const shape = new b2.b2ChainShape()

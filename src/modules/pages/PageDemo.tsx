@@ -68,11 +68,11 @@ export function PageDemo<SP extends object = object>({
           gotenProps.onMouseOut?.(e)
         },
         onMouseDown: (e: React.MouseEvent<HTMLCanvasElement>) => {
-          drawState.isMousePressed = true
+          if (e.button === 0) drawState.isMousePressed = true
           gotenProps.onMouseDown?.(e)
         },
         onMouseUp: (e: React.MouseEvent<HTMLCanvasElement>) => {
-          drawState.isMousePressed = false
+          if (e.button === 0) drawState.isMousePressed = false
           gotenProps.onMouseUp?.(e)
         },
       }

@@ -67,20 +67,20 @@ export class CanvasUtil {
   executeFrame = () => {
     if (!this.isActive) return
 
-    this.rafID = requestAnimationFrame(this.executeFrame)
-
     this.prevTime = this.nowTime
     this.nowTime = Date.now()
     this.deltaTime = this.nowTime - this.prevTime
 
-    if (this.prevTime === 0 || this.deltaTime === 0) return
+    if (this.prevTime !== 0 && this.deltaTime !== 0) {
+      const { ctx, pixelRatio, width, height } = this
+      ctx.save()
+      if (pixelRatio !== 1) ctx.scale(pixelRatio, pixelRatio)
+      ctx.clearRect(0, 0, width, height)
+      this.eventRender.fire({ canvasUtil: this })
+      ctx.restore()
+    }
 
-    const { ctx, pixelRatio, width, height } = this
-    ctx.save()
-    if (pixelRatio !== 1) ctx.scale(pixelRatio, pixelRatio)
-    ctx.clearRect(0, 0, width, height)
-    this.eventRender.fire({ canvasUtil: this })
-    ctx.restore()
+    this.rafID = requestAnimationFrame(this.executeFrame)
   }
 
   enable = () => {

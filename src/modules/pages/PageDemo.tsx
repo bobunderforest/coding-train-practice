@@ -15,13 +15,16 @@ export type CanvasComponentProps = Partial<
   ComponentProps<typeof CanvasAnimFrame>
 >
 
+export type GetCanvasProps<S> = (args: {
+  canvasUtil: CanvasUtil
+  drawState: S
+}) => CanvasComponentProps
+
 type Props<SP, S = StateWithDefaults<SP>> = ControlsProps & {
-  canvasProps?: (args: {
-    canvasUtil: CanvasUtil
-    drawState: S
-  }) => CanvasComponentProps
+  canvasProps?: GetCanvasProps<S>
   render: (args: RenderArgs & { drawState: S }) => void
   setup: (args: RenderArgs) => SP
+  afterSetup?: (args: RenderArgs & { drawState: S }) => void
   removeMouseOnOut?: boolean
 }
 
@@ -29,6 +32,7 @@ export function PageDemo<SP extends object = object>({
   canvasProps: canvasPropsProp = () => ({}),
   render: renderProp,
   setup: setupProp,
+  afterSetup,
   removeMouseOnOut,
   ...controlProps
 }: Props<SP>) {
@@ -50,7 +54,10 @@ export function PageDemo<SP extends object = object>({
 
       const drawState = drawStateRef.current
 
-      const gotenProps = canvasPropsProp({ canvasUtil, drawState: drawState })
+      const gotenProps = canvasPropsProp({
+        canvasUtil,
+        drawState: drawStateRef.current,
+      })
       const defaultProps = {
         onMouseMove: (e: React.MouseEvent<HTMLCanvasElement>) => {
           if (drawState.mouse) {
@@ -81,6 +88,8 @@ export function PageDemo<SP extends object = object>({
         ...gotenProps,
         ...defaultProps,
       })
+
+      afterSetup?.({ canvasUtil, drawState })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],

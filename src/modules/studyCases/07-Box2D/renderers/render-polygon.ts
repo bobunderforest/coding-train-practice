@@ -1,7 +1,7 @@
 import * as b2 from '@box2d/core'
 import { Box2DUtil } from '../box2d-utils/Box2DUtil'
 
-export function renderBox(args: {
+export function renderPolygon(args: {
   ctx: CanvasRenderingContext2D
   b2dutil: Box2DUtil
   body: b2.b2Body
@@ -15,36 +15,32 @@ export function renderBox(args: {
   // World values
   const angle = body.GetAngle()
   const posWorld = body.GetPosition()
-  const wWorld = shape.m_vertices[1].x - shape.m_vertices[0].x
-  const hWorld = shape.m_vertices[3].y - shape.m_vertices[0].y
+  const vertices = shape.m_vertices
 
   // Screen values
   const { x, y } = coords.worldToScreen(posWorld.x, posWorld.y)
-  const w = coords.worldToScreenScalar(wWorld)
-  const h = coords.worldToScreenScalar(hWorld)
-  const wHalf = w / 2
-  const hHalf = h / 2
 
   // Draw
   ctx.save()
   ctx.translate(x, y)
-  ctx.rotate(angle * -1)
+  ctx.scale(1, -1)
+  ctx.rotate(angle)
+
+  ctx.beginPath()
+  const start = coords.worldToScreenVector(vertices[0].x, vertices[0].y)
+  ctx.moveTo(start.x, start.y)
+  for (const v of vertices) {
+    const vScreen = coords.worldToScreenVector(v.x, v.y)
+    ctx.lineTo(vScreen.x, vScreen.y)
+  }
+  ctx.lineTo(start.x, start.y)
+  ctx.closePath()
 
   ctx.lineWidth = 1
   ctx.fillStyle = fillColor
   ctx.strokeStyle = strokeColor
-  ctx.beginPath()
-  ctx.rect(-wHalf, -hHalf, w, h)
   ctx.fill()
   ctx.stroke()
-  ctx.closePath()
-
-  ctx.beginPath()
-  ctx.strokeStyle = strokeColor
-  ctx.moveTo(0, 0)
-  ctx.lineTo(0, -hHalf)
-  ctx.stroke()
-  ctx.closePath()
 
   ctx.restore()
 }

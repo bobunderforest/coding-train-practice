@@ -1,9 +1,7 @@
-import type {
-  StateWithDefaults,
-  CanvasComponentProps,
-} from 'modules/pages/PageDemo'
 import { Vector } from 'modules/math/vectors/VectorMutable'
+import type { GetCanvasProps, StateWithDefaults } from 'modules/pages/PageDemo'
 import type { Box2DUtil } from './Box2DUtil'
+import type { CanvasUtil } from 'modules/canvas/canvas-util'
 
 type DrawStateForPatch = StateWithDefaults<{
   b2dutil: Box2DUtil
@@ -12,12 +10,16 @@ type DrawStateForPatch = StateWithDefaults<{
 /**
  * Camera control handlers
  */
-export function getCanvasPropsPatchedWithControls(props: CanvasComponentProps) {
-  return <DrawState extends DrawStateForPatch>(args: {
-    drawState: DrawState
-  }) => {
+export function getCanvasPropsPatchedWithControls<
+  DrawState extends object = object,
+  DrawStateFull extends DrawState & DrawStateForPatch = DrawState &
+    DrawStateForPatch,
+>(getProps: GetCanvasProps<DrawStateFull>) {
+  return (args: { canvasUtil: CanvasUtil; drawState: DrawStateFull }) => {
     const { drawState } = args
+    const props = getProps(args)
     return {
+      ...props,
       onWheelCapture: (e: React.WheelEvent<HTMLCanvasElement>) => {
         const {
           b2dutil: { coords },

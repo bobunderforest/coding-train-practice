@@ -60,10 +60,10 @@ export class Surface {
     const { coords } = this.b2dutil
 
     ctx.beginPath()
-    const start = coords.worldToScreen(this.verticies[0])
+    const start = coords.worldToScreen(this.verticies[0].x, this.verticies[0].y)
     ctx.moveTo(start.x, start.y)
     for (const v of this.verticies) {
-      const vScreen = coords.worldToScreen(v)
+      const vScreen = coords.worldToScreen(v.x, v.y)
       ctx.lineTo(vScreen.x, vScreen.y)
     }
     ctx.lineWidth = 1

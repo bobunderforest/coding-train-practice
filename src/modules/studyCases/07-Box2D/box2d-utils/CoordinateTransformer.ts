@@ -24,18 +24,31 @@ export class CoordinateTransformer {
   }
 
   // Convert world coordinates to screen coordinates
-  worldToScreen(worldPos: Vector): Vector {
+  worldToScreen(x: number, y: number): Vector {
     return {
-      x: (worldPos.x - this.offsetX) * this.zoom + this.screenWidth / 2,
-      y: this.screenHeight / 2 - (worldPos.y - this.offsetY) * this.zoom,
+      x: (x - this.offsetX) * this.zoom + this.screenWidth / 2,
+      y: this.screenHeight / 2 - (y - this.offsetY) * this.zoom,
     }
   }
 
   // Convert screen coordinates to world coordinates
-  screenToWorld(screenPos: Vector): Vector {
+  screenToWorld(x: number, y: number): Vector {
     return {
-      x: (screenPos.x - this.screenWidth / 2) / this.zoom + this.offsetX,
-      y: (this.screenHeight / 2 - screenPos.y) / this.zoom + this.offsetY,
+      x: (x - this.screenWidth / 2) / this.zoom + this.offsetX,
+      y: (this.screenHeight / 2 - y) / this.zoom + this.offsetY,
+    }
+  }
+
+  worldToScreenVector(x: number, y: number): Vector {
+    return {
+      x: x * this.zoom,
+      y: y * this.zoom,
+    }
+  }
+  screenToWorldVector(x: number, y: number): Vector {
+    return {
+      x: x / this.zoom,
+      y: y / this.zoom,
     }
   }
 

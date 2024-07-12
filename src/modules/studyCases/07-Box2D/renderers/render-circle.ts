@@ -18,7 +18,7 @@ export function renderCircle(args: {
   const rWorld = shape.m_radius
 
   // Screen values
-  const { x, y } = coords.worldToScreen(posWorld)
+  const { x, y } = coords.worldToScreen(posWorld.x, posWorld.y)
   const offsetX = coords.worldToScreenScalar(shape.m_p.x)
   const offsetY = coords.worldToScreenScalar(shape.m_p.y)
   const r = coords.worldToScreenScalar(rWorld)

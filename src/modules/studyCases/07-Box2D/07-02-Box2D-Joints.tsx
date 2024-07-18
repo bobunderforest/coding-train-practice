@@ -1,20 +1,16 @@
 import { PageDemo } from 'modules/pages/PageDemo'
-import { links } from 'modules/appCore/links'
 
 import { random } from 'modules/math'
-import { Vector } from 'modules/math/vectors/VectorMutable'
 
 import * as b2 from '@box2d/core'
 import { Box2DUtil } from './box2d-utils/Box2DUtil'
-import { Box } from './objects/Box'
 import { Surface } from './objects/Surface'
-import { ComplexBody } from './objects/ComplexBody'
-import type { B2dObject } from './objects/B2dObject'
 import { getCanvasPropsPatchedWithControls } from './box2d-utils/getCanvasPropsPatchedWithCameraControls'
 import { Circle } from './objects/Circle'
 import { B2dDistanceJoint } from './objects/B2dDistanceJoint'
 import { setInitialPush } from './box2d-utils/setInitialPush'
 import { Windmill } from './objects/Windmill'
+import { Bridge } from './objects/Bridge'
 
 type Renderable = {
   render(ctx: CanvasRenderingContext2D): void
@@ -43,15 +39,12 @@ export const Box2DJointsPage = () => (
       const b2dutil = new Box2DUtil(canvasUtil)
 
       const terrain = new Surface(b2dutil)
-
-      // TODO: Bridge
-
-      // Windmill
+      const bridge = new Bridge(b2dutil)
       const windmill = new Windmill(b2dutil)
 
       return {
         b2dutil,
-        figures: [terrain, windmill],
+        figures: [terrain, windmill, bridge],
         lastFigureTime: Date.now(),
       }
     }}

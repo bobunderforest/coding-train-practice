@@ -5,12 +5,18 @@ import { renderCircle } from '../renderers/render-circle'
 import { B2dObject } from './B2dObject'
 
 export class Circle extends B2dObject {
-  constructor(b2dutil: Box2DUtil, bodyDef: b2.b2BodyDef) {
+  constructor(
+    b2dutil: Box2DUtil,
+    bodyDef: b2.b2BodyDef,
+    args: { radius?: number } = {},
+  ) {
+    const { radius = random(5, 15) } = args
+
     super(b2dutil, bodyDef)
 
     // Create a shape
     const shape = new b2.b2CircleShape()
-    shape.m_radius = random(5, 15)
+    shape.m_radius = radius
 
     // Create a fixture
     this.body.CreateFixture({

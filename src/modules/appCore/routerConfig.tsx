@@ -14,6 +14,7 @@ import { Spring } from 'modules/studyCases/05-Pendulum/Spring'
 import { ParticleSystemPage } from 'modules/studyCases/06-Particles/ParticleSystem'
 import { TexturedParticle } from 'modules/studyCases/06-Particles/TexturedParticle'
 import { Box2DBasicPage } from 'modules/studyCases/07-Box2D/07-01-Box2D-Basic'
+import { Box2DJointsPage } from 'modules/studyCases/07-Box2D/07-02-Box2D-Joints'
 
 import { links } from './links'
 
@@ -74,6 +75,10 @@ export const routes: RouteObject[] = [
       {
         element: <Box2DBasicPage />,
         path: links.box2dBasic.link,
+      },
+      {
+        element: <Box2DJointsPage />,
+        path: links.box2dJoints.link,
       },
     ],
   },

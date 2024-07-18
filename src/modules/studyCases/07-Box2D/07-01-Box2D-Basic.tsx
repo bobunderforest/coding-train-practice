@@ -24,7 +24,7 @@ type DrawState = {
 
 export const Box2DBasicPage = () => (
   <PageDemo<DrawState>
-    next={links.box2dComplex}
+    next={links.box2dJoints}
     srcLink="07-Box2D/07-01-Box2D-Basic.tsx"
     hint={
       <>

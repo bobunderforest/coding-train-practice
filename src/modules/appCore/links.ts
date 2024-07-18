@@ -51,5 +51,8 @@ export const links = {
     link: '/box2d-basic',
     text: 'Box 2D — Basic',
   },
+  box2dJoints: {
+    link: '/box2d-joints',
+    text: 'Box 2D — Joints',
   },
 }

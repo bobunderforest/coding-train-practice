@@ -1,6 +1,6 @@
 # Box2d
 
-> Youtube Playlist: [Physics Libraries - The Nature of Code](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6akvoNKE4GAxf6ZeBYoJ4uh); Videos 3 – 13
+> Youtube Playlist: [Physics Libraries - The Nature of Code](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6akvoNKE4GAxf6ZeBYoJ4uh); Videos 3 – 12
 
 Box2d is a physical engine that operates with such entities:
 - World
@@ -28,3 +28,10 @@ Box2d operates it's own coordinate system so we need to convert object coordinat
 #### Complex objects
 
 Complex objects can be created by custom polygon or by attaching multiple shapes to one body.
+
+#### Joints
+> [Video](https://www.youtube.com/watch?v=4LYvltd07hk&list=PLRqwX-V7Uu6akvoNKE4GAxf6ZeBYoJ4uh&index=10)
+
+1. Have 2 bodies.
+2. Define the joint and configure all the params.
+3. Create the joint

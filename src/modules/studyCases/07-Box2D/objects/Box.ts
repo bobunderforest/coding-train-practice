@@ -1,24 +1,12 @@
 import * as b2 from '@box2d/core'
-import { random } from 'modules/math'
 import { Vector } from 'modules/math/vectors/VectorMutable'
 import { Box2DUtil } from '../box2d-utils/Box2DUtil'
 import { renderBox } from '../renderers/render-box'
+import { B2dObject } from './B2dObject'
 
-export class Box {
-  b2dutil: Box2DUtil
-  fillColor: string
-  strokeColor: string
-  body: b2.b2Body
-
+export class Box extends B2dObject {
   constructor(b2dutil: Box2DUtil, size: Vector, bodyDef: b2.b2BodyDef) {
-    this.b2dutil = b2dutil
-
-    // Colors
-    this.fillColor = `rgb(${random(200, 255)}, ${random(200, 255)}, ${random(200, 255)})`
-    this.strokeColor = `rgb(${random(100, 200)}, ${random(100, 200)}, ${random(100, 200)})`
-
-    // Create a body
-    this.body = b2dutil.world.CreateBody(bodyDef)
+    super(b2dutil, bodyDef)
 
     // Create a shape
     const shape = new b2.b2PolygonShape()

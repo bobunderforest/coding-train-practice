@@ -1,14 +1,18 @@
 import * as b2 from '@box2d/core'
 import { Box2DUtil } from '../box2d-utils/Box2DUtil'
-import { random } from 'modules/math'
+import { B2dObject } from './B2dObject'
+import { renderPolygon } from '../renderers/render-polygon'
 
-export class Surface {
-  b2dutil: Box2DUtil
+export class Surface extends B2dObject {
   verticies: b2.b2Vec2[]
-  fillColor: string
-  strokeColor: string
+  shape: b2.b2ChainShape
 
   constructor(b2dutil: Box2DUtil) {
+    super(b2dutil, {
+      type: b2.b2BodyType.b2_staticBody,
+    })
+
+    // Params
     const start = -600
     const end = 600
     const altitude = -150
@@ -16,12 +20,7 @@ export class Surface {
     const amplitude = 30
     const depth = 600
 
-    // Colors
-    this.fillColor = `rgb(${random(200, 255)}, ${random(200, 255)}, ${random(200, 255)})`
-    this.strokeColor = `rgb(${random(100, 200)}, ${random(100, 200)}, ${random(100, 200)})`
-
     // Geometry
-    this.b2dutil = b2dutil
     this.verticies = Array.from(Array(verticiesCount + 1)).map((_, i) => {
       const length = end - start
       const step = length / verticiesCount
@@ -37,19 +36,16 @@ export class Surface {
       new b2.b2Vec2(start, altitude - depth),
     ].reverse()
 
-    const shape = new b2.b2ChainShape()
-    shape.CreateChain(
+    this.shape = new b2.b2ChainShape()
+    this.shape.CreateChain(
       this.verticies,
       this.verticies.length,
       this.verticies[0],
       this.verticies[this.verticies.length - 1],
     )
 
-    const body = b2dutil.world.CreateBody({
-      type: b2.b2BodyType.b2_staticBody,
-    })
-    body.CreateFixture({
-      shape,
+    this.body.CreateFixture({
+      shape: this.shape,
       density: 10,
       friction: 0.6,
       restitution: 0.01,

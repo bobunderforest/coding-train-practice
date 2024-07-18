@@ -12,11 +12,12 @@ import { Circle } from './objects/Circle'
 import { ComplexBody } from './objects/ComplexBody'
 import { Surface } from './objects/Surface'
 import { renderPoint } from './renderers/render-point'
+import { ComplexBody } from './objects/ComplexBody'
 import { CustomPolygon } from './objects/CustomPolygon'
 
 type DrawState = {
   b2dutil: Box2DUtil
-  figures: (Box | Circle | ComplexBody | Surface)[]
+  figures: B2dObject[]
   customFigureVerticies: b2.b2Vec2[]
 }
 

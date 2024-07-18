@@ -6,14 +6,15 @@ import { Vector } from 'modules/math/vectors/VectorMutable'
 
 import * as b2 from '@box2d/core'
 import { Box2DUtil } from './box2d-utils/Box2DUtil'
-import { getCanvasPropsPatchedWithControls } from './box2d-utils/getCanvasPropsPatchedWithCameraControls'
 import { Box } from './objects/Box'
 import { Circle } from './objects/Circle'
-import { ComplexBody } from './objects/ComplexBody'
 import { Surface } from './objects/Surface'
-import { renderPoint } from './renderers/render-point'
 import { ComplexBody } from './objects/ComplexBody'
 import { CustomPolygon } from './objects/CustomPolygon'
+import type { B2dObject } from './objects/B2dObject'
+import { renderPoint } from './renderers/render-point'
+import { getCanvasPropsPatchedWithControls } from './box2d-utils/getCanvasPropsPatchedWithCameraControls'
+import { setInitialPush } from './box2d-utils/setInitialPush'
 
 type DrawState = {
   b2dutil: Box2DUtil
@@ -132,10 +133,7 @@ export const Box2DBasicPage = () => (
         // Initial force
         if (newShape) {
           figures.push(newShape)
-          newShape.body.SetLinearVelocity(
-            new b2.b2Vec2(random(-25, 25), random(-25, 500)),
-          )
-          newShape.body.SetAngularVelocity(random(-5, 5))
+          setInitialPush(newShape.body)
         }
       }
 

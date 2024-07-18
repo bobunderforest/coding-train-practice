@@ -14,6 +14,7 @@ import { getCanvasPropsPatchedWithControls } from './box2d-utils/getCanvasPropsP
 import { Circle } from './objects/Circle'
 import { B2dDistanceJoint } from './objects/B2dDistanceJoint'
 import { setInitialPush } from './box2d-utils/setInitialPush'
+import { Windmill } from './objects/Windmill'
 
 type Renderable = {
   render(ctx: CanvasRenderingContext2D): void
@@ -45,11 +46,12 @@ export const Box2DJointsPage = () => (
 
       // TODO: Bridge
 
-      // TODO: Windmill
+      // Windmill
+      const windmill = new Windmill(b2dutil)
 
       return {
         b2dutil,
-        figures: [terrain],
+        figures: [terrain, windmill],
         lastFigureTime: Date.now(),
       }
     }}
@@ -64,12 +66,12 @@ export const Box2DJointsPage = () => (
        * Physics
        */
       world.Step(deltaTime / 100, {
-        velocityIterations: 10,
-        positionIterations: 10,
+        velocityIterations: 30,
+        positionIterations: 30,
       })
 
       /**
-       * Add new box
+       * Add new joined objects
        */
       if (mouse && isMousePressed && nowTime - lastFigureTime > 150) {
         const mouseCoordsWorld = coords.screenToWorld(mouse.x, mouse.y)

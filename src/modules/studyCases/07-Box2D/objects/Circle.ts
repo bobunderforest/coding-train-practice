@@ -15,7 +15,7 @@ export class Circle extends B2dObject {
     // Create a fixture
     this.body.CreateFixture({
       shape,
-      density: 10,
+      density: 1,
       friction: 0.6,
       restitution: 0.01,
     })

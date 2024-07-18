@@ -93,7 +93,7 @@ export const Box2DBasicPage = () => (
       const { world, coords } = b2dutil
 
       /**
-       * Add new box
+       * Add new shape
        */
       if (mouse && isMousePressed) {
         const mouseCoordsWorld = coords.screenToWorld(mouse.x, mouse.y)

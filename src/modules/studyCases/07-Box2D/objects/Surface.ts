@@ -15,7 +15,7 @@ export class Surface extends B2dObject {
     // Params
     const start = -600
     const end = 600
-    const altitude = -150
+    const altitude = -200
     const verticiesCount = 120
     const amplitude = 30
     const depth = 600

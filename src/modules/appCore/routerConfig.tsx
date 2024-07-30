@@ -15,6 +15,7 @@ import { ParticleSystemPage } from 'modules/studyCases/06-Particles/ParticleSyst
 import { TexturedParticle } from 'modules/studyCases/06-Particles/TexturedParticle'
 import { Box2DBasicPage } from 'modules/studyCases/07-Box2D/07-01-Box2D-Basic'
 import { Box2DJointsPage } from 'modules/studyCases/07-Box2D/07-02-Box2D-Joints'
+import { Box2DMouseJoint } from 'modules/studyCases/07-Box2D/07-03-Box2D-Mouse-Joint'
 
 import { links } from './links'
 
@@ -79,6 +80,10 @@ export const routes: RouteObject[] = [
       {
         element: <Box2DJointsPage />,
         path: links.box2dJoints.link,
+      },
+      {
+        element: <Box2DMouseJoint />,
+        path: links.box2dMouseJoint.link,
       },
     ],
   },

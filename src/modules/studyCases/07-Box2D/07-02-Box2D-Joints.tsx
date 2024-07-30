@@ -11,6 +11,7 @@ import { B2dDistanceJoint } from './objects/B2dDistanceJoint'
 import { setInitialPush } from './box2d-utils/setInitialPush'
 import { Windmill } from './objects/Windmill'
 import { Bridge } from './objects/Bridge'
+import { links } from 'modules/appCore/links'
 
 type Renderable = {
   render(ctx: CanvasRenderingContext2D): void
@@ -24,7 +25,7 @@ type DrawState = {
 
 export const Box2DJointsPage = () => (
   <PageDemo<DrawState>
-    // next={links.}
+    next={links.box2dMouseJoint}
     srcLink="07-Box2D/07-02-Box2D-Joints.tsx"
     hint={
       <>

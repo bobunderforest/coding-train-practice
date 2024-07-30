@@ -46,3 +46,15 @@ Complex objects can be created by custom polygon or by attaching multiple shapes
 2. Define the joint and configure all the params.
 3. Create the joint
 
+## Mouse Joint
+
+> [Video](https://www.youtube.com/watch?v=Ubfqc983jN8&list=PLRqwX-V7Uu6akvoNKE4GAxf6ZeBYoJ4uh)
+
+1. Define `MouseJointDef`.
+2. Set the `bodyA` parameter as a ground body, and `bodyB` parameter as a body which you are interacting with.
+3. Set the `target` vector to the mouse pointer position values.
+4. Apply the `maxForce` and `damping` values.
+5. Calculate stiffness with the `b2LinearStiffness` helper.
+6. Create the joint with `world.CreateJoint`.
+7. Update joint's `target` position while mouse is moving with `joint.SetTarget()`.
+8. On mouse up, call the `world.DestroyJoint()` method.

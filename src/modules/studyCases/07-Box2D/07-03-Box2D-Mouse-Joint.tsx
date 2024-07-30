@@ -11,6 +11,9 @@ import { Box } from './objects/Box'
 import { Vector } from 'modules/math/vectors/VectorMutable'
 import { MouseJoint } from './objects/MouseJoint'
 
+const BOX_SPAWN_INTERVAL = 300
+const BOXES_LIMIT = 100
+
 type Renderable = {
   render(ctx: CanvasRenderingContext2D): void
 }
@@ -28,7 +31,7 @@ export const Box2DMouseJoint = () => (
     srcLink="07-Box2D/07-03-Box2D-Mouse-Joint.tsx"
     hint={
       <>
-        move a shape — LMB
+        drag boxes — LMB
         <br />
         zoom — scroll
         <br />
@@ -44,7 +47,7 @@ export const Box2DMouseJoint = () => (
         b2dutil,
         figures: [terrain],
         mouseJoint: null,
-        lastFigureTime: Date.now(),
+        lastFigureTime: Date.now() - BOX_SPAWN_INTERVAL,
       }
     }}
     canvasProps={getCanvasPropsPatchedWithControls(() => ({}))}
@@ -89,7 +92,10 @@ export const Box2DMouseJoint = () => (
       /**
        * Spawn new objects
        */
-      if (nowTime - lastFigureTime > 1000 && figures.length < 40) {
+      if (
+        nowTime - lastFigureTime > BOX_SPAWN_INTERVAL &&
+        figures.length < BOXES_LIMIT
+      ) {
         const newShape = new Box(
           b2dutil,
           new Vector(random(2, 5), random(2, 5)),

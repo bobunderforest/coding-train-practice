@@ -53,15 +53,7 @@ export const Box2DJointsPage = () => (
       const { ctx, deltaTime, nowTime } = canvasUtil
       const { b2dutil, figures, mouse, isMousePressed, lastFigureTime } =
         drawState
-      const { world, coords, isWheelPressed, grabMove } = b2dutil
-
-      /**
-       * Physics
-       */
-      world.Step(deltaTime / 100, {
-        velocityIterations: 30,
-        positionIterations: 30,
-      })
+      const { coords } = b2dutil
 
       /**
        * Add new joined objects
@@ -78,9 +70,9 @@ export const Box2DJointsPage = () => (
           type: b2.b2BodyType.b2_dynamicBody,
           position: new b2.b2Vec2(
             mouseCoordsWorld.x +
-              random(20, 50) * (random(0, 1, false) === 0 ? -1 : 1),
+              random(1.5, 3) * (random(0, 1, false) === 0 ? -1 : 1),
             mouseCoordsWorld.y +
-              random(20, 50) * (random(0, 1, false) === 0 ? -1 : 1),
+              random(1.5, 3) * (random(0, 1, false) === 0 ? -1 : 1),
           ),
         })
 
@@ -95,6 +87,11 @@ export const Box2DJointsPage = () => (
 
         drawState.lastFigureTime = nowTime
       }
+
+      /**
+       * Calc Physics Step
+       */
+      b2dutil.step(deltaTime / 100)
 
       /**
        * Draw

@@ -13,12 +13,12 @@ export class Surface extends B2dObject {
     })
 
     // Params
-    const start = -600
-    const end = 600
-    const altitude = -200
+    const start = -80
+    const end = 80
+    const altitude = -25
     const verticiesCount = 120
-    const amplitude = 30
-    const depth = 600
+    const amplitude = 6
+    const depth = 100
 
     // Geometry
     this.verticies = Array.from(Array(verticiesCount + 1)).map((_, i) => {

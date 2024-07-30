@@ -9,9 +9,9 @@ export class Bridge {
 
   constructor(b2dutil: Box2DUtil) {
     const total = 50
-    const startX = -600
-    const endX = 600
-    const y = 400
+    const startX = -60
+    const endX = 60
+    const y = 45
 
     Array.from(Array(total)).forEach((_, i) => {
       const x = startX + i * ((endX - startX) / total)
@@ -26,7 +26,7 @@ export class Bridge {
           position: new b2.b2Vec2(x, y),
         },
         {
-          radius: 10,
+          radius: 1,
         },
       )
 

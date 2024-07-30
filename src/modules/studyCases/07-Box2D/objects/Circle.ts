@@ -10,7 +10,7 @@ export class Circle extends B2dObject {
     bodyDef: b2.b2BodyDef,
     args: { radius?: number } = {},
   ) {
-    const { radius = random(5, 15) } = args
+    const { radius = random(0.5, 2) } = args
 
     super(b2dutil, bodyDef)
 
@@ -21,7 +21,7 @@ export class Circle extends B2dObject {
     // Create a fixture
     this.body.CreateFixture({
       shape,
-      density: 1,
+      density: 0.5,
       friction: 0.6,
       restitution: 0.01,
     })

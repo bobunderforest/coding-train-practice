@@ -9,13 +9,13 @@ export class Windmill {
   fan: Box
 
   constructor(b2dutil: Box2DUtil) {
-    this.pile = new Box(b2dutil, new Vector(20, 340), {
+    this.pile = new Box(b2dutil, new Vector(2, 25), {
       type: b2.b2BodyType.b2_staticBody,
-      position: new b2.b2Vec2(10, 0),
+      position: new b2.b2Vec2(1.25, -6.5),
     })
 
-    const fanCenter = new b2.b2Vec2(10, 150)
-    this.fan = new Box(b2dutil, new Vector(250, 10), {
+    const fanCenter = new b2.b2Vec2(1.25, 5)
+    this.fan = new Box(b2dutil, new Vector(20, 1), {
       type: b2.b2BodyType.b2_dynamicBody,
       position: fanCenter,
     })

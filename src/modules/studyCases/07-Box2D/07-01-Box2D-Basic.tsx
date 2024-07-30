@@ -40,9 +40,9 @@ export const Box2DBasicPage = () => (
     setup={({ canvasUtil }) => {
       const b2dutil = new Box2DUtil(canvasUtil)
 
-      const staticBox = new Box(b2dutil, new Vector(200, 20), {
+      const staticBox = new Box(b2dutil, new Vector(25, 2), {
         type: b2.b2BodyType.b2_staticBody,
-        position: new b2.b2Vec2(0, -50),
+        position: new b2.b2Vec2(0, 0),
       })
 
       const terrain = new Surface(b2dutil)
@@ -90,7 +90,7 @@ export const Box2DBasicPage = () => (
       const { ctx, deltaTime } = canvasUtil
       const { b2dutil, isMousePressed, mouse, figures, customFigureVerticies } =
         drawState
-      const { world, coords } = b2dutil
+      const { coords } = b2dutil
 
       /**
        * Add new shape
@@ -104,7 +104,7 @@ export const Box2DBasicPage = () => (
           case 0: {
             newShape = new Box(
               b2dutil,
-              new Vector(random(10, 25), random(10, 25)),
+              new Vector(random(1, 5), random(1, 5)),
               {
                 type: b2.b2BodyType.b2_dynamicBody,
                 position: new b2.b2Vec2(mouseCoordsWorld.x, mouseCoordsWorld.y),
@@ -138,12 +138,9 @@ export const Box2DBasicPage = () => (
       }
 
       /**
-       * Physics
+       * Calc Physics Step
        */
-      world.Step(deltaTime / 100, {
-        velocityIterations: 10,
-        positionIterations: 10,
-      })
+      b2dutil.step(deltaTime / 100)
 
       /**
        * Draw

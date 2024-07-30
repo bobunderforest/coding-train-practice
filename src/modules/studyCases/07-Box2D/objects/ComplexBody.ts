@@ -11,11 +11,11 @@ export class ComplexBody extends B2dObject {
     super(b2dutil, bodyDef)
 
     // Create shapes
-    const boxSize = new Vector(random(5, 15), random(20, 25))
+    const boxSize = new Vector(random(0.5, 0.7), random(1, 2))
     const boxShape = new b2.b2PolygonShape()
     boxShape.SetAsBox(boxSize.x / 2, boxSize.y / 2)
 
-    const circleR = random(10, 15)
+    const circleR = random(1, 2)
     const circleShape = new b2.b2CircleShape()
     circleShape.m_radius = circleR
     circleShape.m_p.Set(0, circleR + boxSize.y / 2)
@@ -23,13 +23,13 @@ export class ComplexBody extends B2dObject {
     // Create a fixture
     this.body.CreateFixture({
       shape: boxShape,
-      density: 10,
+      density: 0.5,
       friction: 0.6,
       restitution: 0.01,
     })
     this.body.CreateFixture({
       shape: circleShape,
-      density: 10,
+      density: 0.5,
       friction: 0.6,
       restitution: 0.01,
     })

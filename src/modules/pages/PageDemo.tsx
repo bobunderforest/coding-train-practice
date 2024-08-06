@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback, useRef, useState } from 'react'
+import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { RenderArgs, CanvasAnimFrame } from 'modules/canvas/CanvasAnimFrame'
 import { DemoLayoutControls } from 'modules/ui/layout/DemoLayoutControls'
 import { Vector } from 'modules/math/vectors/VectorMutable'
@@ -9,6 +9,7 @@ type ControlsProps = ComponentProps<typeof DemoLayoutControls>
 export type StateWithDefaults<S> = S & {
   mouse?: Vector
   isMousePressed: boolean
+  keyboard: { [key: string]: boolean }
 }
 
 export type CanvasComponentProps = Partial<
@@ -48,6 +49,7 @@ export function PageDemo<SP extends object = object>({
         drawStateRef.current = {
           mouse: undefined,
           isMousePressed: false,
+          keyboard: {},
           ...setupProp({ canvasUtil }),
         }
       }
@@ -110,6 +112,23 @@ export function PageDemo<SP extends object = object>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   )
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!drawStateRef.current) return
+      drawStateRef.current.keyboard[e.code] = true
+    }
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (!drawStateRef.current) return
+      delete drawStateRef.current.keyboard[e.code]
+    }
+    window.addEventListener('keydown', onKeyDown)
+    window.addEventListener('keyup', onKeyUp)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('keyup', onKeyUp)
+    }
+  }, [])
 
   return (
     <>

@@ -59,4 +59,8 @@ export const links = {
     link: '/box2d-mouse-joint',
     text: 'Box 2D — Mouse Joint',
   },
+  box2dMutalAttraction: {
+    link: '/box2d-mutal-attraction',
+    text: 'Box 2D — Mutal Attraction',
+  },
 }

@@ -18,5 +18,10 @@ export abstract class B2dObject {
     this.strokeColor = `rgb(${random(100, 200)}, ${random(100, 200)}, ${random(100, 200)})`
   }
 
+  applyForce(force: b2.XY) {
+    const pos = this.body.GetWorldCenter()
+    this.body.ApplyForce(force, pos)
+  }
+
   abstract render(ctx: CanvasRenderingContext2D): void
 }

@@ -1,5 +1,7 @@
 import { RouteObject } from 'react-router-dom'
 
+import { links } from './links'
+
 import { AppLayout } from 'modules/ui/layout/AppLayout'
 import { PageHome } from 'modules/pages/PageHome'
 import { Vectors } from 'modules/studyCases/01-Vectors/Vectors'
@@ -16,8 +18,7 @@ import { TexturedParticle } from 'modules/studyCases/06-Particles/TexturedPartic
 import { Box2DBasicPage } from 'modules/studyCases/07-Box2D/07-01-Box2D-Basic'
 import { Box2DJointsPage } from 'modules/studyCases/07-Box2D/07-02-Box2D-Joints'
 import { Box2DMouseJoint } from 'modules/studyCases/07-Box2D/07-03-Box2D-Mouse-Joint'
-
-import { links } from './links'
+import { Box2DMutalAttraction } from 'modules/studyCases/07-Box2D/07-04-Box2D-MutalAttraction'
 
 export const routes: RouteObject[] = [
   {
@@ -84,6 +85,10 @@ export const routes: RouteObject[] = [
       {
         element: <Box2DMouseJoint />,
         path: links.box2dMouseJoint.link,
+      },
+      {
+        element: <Box2DMutalAttraction />,
+        path: links.box2dMutalAttraction.link,
       },
     ],
   },

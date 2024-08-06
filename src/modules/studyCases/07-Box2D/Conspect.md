@@ -58,3 +58,11 @@ Complex objects can be created by custom polygon or by attaching multiple shapes
 6. Create the joint with `world.CreateJoint`.
 7. Update joint's `target` position while mouse is moving with `joint.SetTarget()`.
 8. On mouse up, call the `world.DestroyJoint()` method.
+
+## Applying Forces
+
+```js
+body.applyForce(force, position)
+```
+
+

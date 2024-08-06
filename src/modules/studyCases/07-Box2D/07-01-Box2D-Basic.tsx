@@ -5,7 +5,7 @@ import { random } from 'modules/math'
 import { Vector } from 'modules/math/vectors/VectorMutable'
 
 import * as b2 from '@box2d/core'
-import { Box2DUtil } from './box2d-utils/Box2DUtil'
+import { Box2DUtil, Renderable } from './box2d-utils/Box2DUtil'
 import { Box } from './objects/Box'
 import { Circle } from './objects/Circle'
 import { Surface } from './objects/Surface'
@@ -19,6 +19,7 @@ import { setInitialPush } from './box2d-utils/setInitialPush'
 type DrawState = {
   b2dutil: Box2DUtil
   figures: B2dObject[]
+  staticFigures: Renderable[]
   customFigureVerticies: b2.b2Vec2[]
 }
 
@@ -35,6 +36,8 @@ export const Box2DBasicPage = () => (
         move: shift / MMB
         <br />
         custom shape: alt+click; enter
+        <br />
+        wind: space
       </>
     }
     setup={({ canvasUtil }) => {
@@ -49,7 +52,8 @@ export const Box2DBasicPage = () => (
 
       return {
         b2dutil,
-        figures: [staticBox, terrain],
+        figures: [],
+        staticFigures: [staticBox, terrain],
         customFigureVerticies: [],
       }
     }}
@@ -88,7 +92,7 @@ export const Box2DBasicPage = () => (
     )}
     render={({ canvasUtil, drawState }) => {
       const { ctx, deltaTime } = canvasUtil
-      const { b2dutil, isMousePressed, mouse, figures, customFigureVerticies } =
+      const { b2dutil, isMousePressed, mouse, customFigureVerticies } =
         drawState
       const { coords } = b2dutil
 
@@ -132,22 +136,16 @@ export const Box2DBasicPage = () => (
 
         // Initial force
         if (newShape) {
-          figures.push(newShape)
+          drawState.figures.push(newShape)
           setInitialPush(newShape.body)
         }
       }
 
       /**
-       * Calc Physics Step
+       * Wind, Physics, Draw
        */
-      b2dutil.step(deltaTime / 100)
-
-      /**
-       * Draw
-       */
-      for (const f of figures) {
-        f.render(ctx)
-      }
+      b2dutil.applyWindKey(drawState)
+      b2dutil.stepAndRender(deltaTime / 100, drawState, ctx)
       for (const v of customFigureVerticies) {
         const point = coords.worldToScreen(v.x, v.y)
         renderPoint(ctx, point, '#f77')

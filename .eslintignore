@@ -1,7 +1,0 @@
-# dependencies
-/node_modules
-vite.config.ts
-
-# production
-/dist
-/dist-ssr

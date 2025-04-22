@@ -19,7 +19,7 @@ export function CanvasAnimFrame({
 }: Props) {
   const { ref, width = -1, height = -1 } = useResizeObserver<HTMLDivElement>()
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const canvasUtilRef = useRef<CanvasUtil>()
+  const canvasUtilRef = useRef<CanvasUtil>(null)
 
   useEffect(() => {
     if (!canvasRef.current || width === -1 || height === -1) return
